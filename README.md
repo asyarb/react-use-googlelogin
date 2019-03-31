@@ -101,11 +101,11 @@ if (googleUser) {
 }
 ```
 
-### signIn
+### signIn()
 
 A function that will prompt the user to login via Google. Will use the sign-in flow specified by the `uxMode` parameter. On success, `googleUser` and `googleAuthObj` will be set.
 
-### signOut
+### signOut()
 
 A funciton that will sign out and disconnect the current oAuth2 client. Also sets the `googleUser` and `googleAuthObj` back to `null`.
 
