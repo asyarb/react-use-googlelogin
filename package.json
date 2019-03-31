@@ -14,10 +14,10 @@
     "test": "jest",
     "test:watch": "npm run test -- --watch"
   },
-  "homepage": "https://github.com/asyarb/react-use-googleoauth",
+  "homepage": "https://github.com/asyarb/react-use-googlelogin",
   "repository": {
     "type": "git",
-    "url": "https://github.com/asyarb/react-use-googleoauth.git"
+    "url": "https://github.com/asyarb/react-use-googlelogin.git"
   },
   "keywords": [
     "react",
