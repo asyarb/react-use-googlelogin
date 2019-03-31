@@ -1,6 +1,6 @@
 {
-  "name": "react-use-googleoauth",
-  "version": "0.2.1",
+  "name": "react-use-login",
+  "version": "0.2.2",
   "description": "React hook to utilize google's JavaScript oAuth2 library.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
