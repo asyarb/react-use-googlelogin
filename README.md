@@ -107,13 +107,13 @@ A function that will prompt the user to login via Google. Will use the sign-in f
 
 ### signOut
 
-A funciton that will sign out and disconnect the current oAuth2 client. Also sets the `googleUser` and `googleAuthObj` back to `null.`
+A funciton that will sign out and disconnect the current oAuth2 client. Also sets the `googleUser` and `googleAuthObj` back to `null`.
 
 ### googleAuthObj
 
-The raw `GoogleAuth` object returned by `gapi.auth2.getAuthInstance()`. This instance of `GoogleAuth` will have the current user already tied to it via `gapi.auth2.signIn()` and have access to the scopes specfied in the `scope` parameter. Use this object with the appropriate Google API functions to fetch other data from the user's Google profile
+The raw `GoogleAuth` object returned by `gapi.auth2.getAuthInstance()`. This instance of `GoogleAuth` will have the current user already tied to it via `gapi.auth2.signIn()`, and have access to the scopes specfied in `scope`. Use this object with the appropriate Google API functions to fetch other data from the user's Google profile.
 
 > `GoogleAuth` is a singleton class that allows you to get additional specific data from a user's Google profile and request for additional scopes if they are under the scopes specified in your developer console. 
 
-Refer to [google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication) for more info.
+Refer to [Google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication) for more info.
 
