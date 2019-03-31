@@ -21,6 +21,64 @@ export const useGoogleLogin = ({
   if (!allowedSignInFlows.includes(autoSignIn))
     throw new Error('autoSignIn must be of type: "none", "prompt" or "auto"')
 
+  if (!clientId) throw new Error('clientId must be specified.')
+
+  // Called after a user has been successfully signed in. 'res' is a GoogleAuth() api object that can make API calls based on the scopes provided from hook params. We set the React state for this object here.
+  const handleSigninSuccess = React.useCallback(res => {
+    const basicProfile = res.getBasicProfile()
+    const authResponse = res.getAuthResponse()
+
+    res.googleId = basicProfile.getId()
+    res.tokenObj = authResponse
+    res.tokenId = authResponse.id_token
+    res.accessToken = authResponse.access_token
+
+    res.profileObj = {
+      googleId: basicProfile.getId(),
+      imageUrl: basicProfile.getImageUrl(),
+      email: basicProfile.getEmail(),
+      name: basicProfile.getName(),
+      givenName: basicProfile.getGivenName(),
+      familyName: basicProfile.getFamilyName(),
+    }
+
+    setGoogleUser(res)
+  }, [])
+
+  // Signs in a user with the oAuth2 client and sets the GoogleAuth state.
+  const signIn = React.useCallback(async () => {
+    try {
+      const auth2 = googleApi.current.auth2.getAuthInstance()
+
+      if (responseType === 'code') {
+        return await auth2.grantOfflineAccess({ prompt: 'select_account' })
+      }
+
+      const res = await auth2.signIn({ prompt: 'select_account' })
+      setGoogleAuthObj(res)
+      handleSigninSuccess(res)
+
+      return true
+    } catch {
+      return false
+    }
+  }, [responseType, handleSigninSuccess])
+
+  // Clears the googleAuth and googleUser state and disconnects the google api oauth2 client.
+  const signOut = async () => {
+    if (googleApi.current) {
+      const auth2 = googleApi.current.auth2.getAuthInstance()
+
+      if (auth2 !== null) {
+        await auth2.signOut()
+        auth2.disconnect()
+      }
+
+      setGoogleUser(null)
+      setGoogleAuthObj(null)
+    }
+  }
+
   // Asynchronously retrieves Google's client-side oAuth script and inserts it into the <head> element.
   // Returns: A promise that resolves to the window.gapi object.
   const createGoogleApi = React.useCallback(
@@ -59,15 +117,18 @@ export const useGoogleLogin = ({
     }
 
     googleApi.current.load('auth2', async () => {
-      if (!googleApi.current.auth2.getAuthInstance()) {
-        const res = await googleApi.current.auth2.init(params)
+      try {
+        if (!googleApi.current.auth2.getAuthInstance()) {
+          const res = await googleApi.current.auth2.init(params)
 
-        if (autoSignIn === 'auto' && res.autoSignIn.get())
-          handleSigninSuccess(res.currentUser.get())
-      }
+          if (autoSignIn === 'auto') handleSigninSuccess(res.currentUser.get())
+        }
 
-      if (autoSignIn === 'prompt') {
-        signIn()
+        if (autoSignIn === 'prompt') {
+          signIn()
+        }
+      } catch ({ error, details }) {
+        throw new Error(`${error}: ${details}`)
       }
     })
   }, [
@@ -86,56 +147,6 @@ export const useGoogleLogin = ({
     signIn,
     uxMode,
   ])
-
-  // Called after a user has been successfully signed in. 'res' is a GoogleAuth() api object that can make API calls based on the scopes provided from hook params. We set the React state for this object here.
-  const handleSigninSuccess = React.useCallback(res => {
-    const basicProfile = res.getBasicProfile()
-    const authResponse = res.getAuthResponse()
-
-    res.googleId = basicProfile.getId()
-    res.tokenObj = authResponse
-    res.tokenId = authResponse.id_token
-    res.accessToken = authResponse.access_token
-
-    res.profileObj = {
-      googleId: basicProfile.getId(),
-      imageUrl: basicProfile.getImageUrl(),
-      email: basicProfile.getEmail(),
-      name: basicProfile.getName(),
-      givenName: basicProfile.getGivenName(),
-      familyName: basicProfile.getFamilyName(),
-    }
-
-    setGoogleUser(res)
-  }, [])
-
-  // Signs in a user with the oAuth2 client and sets the GoogleAuth state.
-  const signIn = React.useCallback(async () => {
-    const auth2 = googleApi.current.auth2.getAuthInstance()
-
-    if (responseType === 'code') {
-      return await auth2.grantOfflineAccess({ prompt: 'select_account' })
-    }
-
-    const res = await auth2.signIn({ prompt: 'select_account' })
-    setGoogleAuthObj(res)
-    handleSigninSuccess(res)
-  }, [responseType, handleSigninSuccess])
-
-  // Clears the googleAuth and googleUser state and disconnects the google api oauth2 client.
-  const signOut = async () => {
-    if (googleApi.current) {
-      const auth2 = googleApi.current.auth2.getAuthInstance()
-
-      if (auth2 !== null) {
-        await auth2.signOut()
-        auth2.disconnect()
-      }
-
-      setGoogleUser(null)
-      setGoogleAuthObj(null)
-    }
-  }
 
   // Allows for async/await in useEffect()
   const asyncEffect = React.useCallback(async () => {
