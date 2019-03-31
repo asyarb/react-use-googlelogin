@@ -14,13 +14,15 @@ yarn add react-use-googlelogin
 
 ## How To Use
 
+Run the hook like you would any other and pass in your `clientId`:
+
 ```js
 import React from 'react'
 import { useGoogleLogin } from 'react-use-googlelogin'
 
 const Example = () => {
   const { googleUser, signIn, signOut } = useGoogleLogin({
-    clientId: process.env.GATSBY_GOOGLE_CLIENT_ID,
+    clientId: process.env.GOOGLE_CLIENT_ID,
   })
 
   return (
@@ -39,6 +41,8 @@ const Example = () => {
   )
 }
 ```
+
+Specify any other options as defined below:
 
 ## API
 
