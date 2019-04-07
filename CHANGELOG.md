@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.1](https://github.com/asyarb/react-use-googlelogin/compare/v0.3.0...v0.3.1) (2019-04-07)
+
+
+
 ## [0.2.3](https://github.com/asyarb/react-use-googlelogin/compare/v0.2.1...v0.2.3) (2019-03-31)
 
 
