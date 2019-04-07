@@ -119,8 +119,8 @@ for more info.
 ### signIn()
 
 A function that will prompt the user to login via Google. Will use the sign-in
-flow specified by the `uxMode` parameter. On success, `googleUser` and
-`googleAuthObj` will be set.
+flow specified by the `uxMode` parameter. On success, this function will return
+`googleUser` and `googleUser` will be set.
 
 If the sign in flow fails (the user closes the popup, etc.), this function will
 return `false`.
