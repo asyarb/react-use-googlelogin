@@ -14,7 +14,6 @@ export const useGoogleLogin = ({
   uxMode = 'popup',
 }) => {
   const [googleUser, setGoogleUser] = React.useState(null)
-  const [googleAuthObj, setGoogleAuthObj] = React.useState(null)
   const googleApi = React.useRef()
 
   const allowedSignInFlows = ['auto', 'prompt', 'none']
@@ -24,7 +23,7 @@ export const useGoogleLogin = ({
   if (!clientId) throw new Error('clientId must be specified.')
 
   // Called after a user has been successfully signed in. 'res' is a GoogleAuth() api object that can make API calls based on the scopes provided from hook params. We set the React state for this object here.
-  const handleSigninSuccess = React.useCallback(res => {
+  const fetchProfileDetails = React.useCallback(async res => {
     const basicProfile = res.getBasicProfile()
     const authResponse = res.getAuthResponse()
 
@@ -42,10 +41,11 @@ export const useGoogleLogin = ({
       familyName: basicProfile.getFamilyName(),
     }
 
-    setGoogleUser(res)
+    return res
   }, [])
 
   // Signs in a user with the oAuth2 client and sets the GoogleAuth state.
+  // Returns: If successful, returns the GoogleAuth object for the associated user.
   const signIn = React.useCallback(async () => {
     try {
       const auth2 = googleApi.current.auth2.getAuthInstance()
@@ -55,14 +55,14 @@ export const useGoogleLogin = ({
       }
 
       const res = await auth2.signIn({ prompt: 'select_account' })
-      setGoogleAuthObj(res)
-      handleSigninSuccess(res)
+      const googleUserObj = await fetchProfileDetails(res)
+      setGoogleUser(googleUserObj)
 
-      return true
+      return googleUserObj
     } catch {
       return false
     }
-  }, [responseType, handleSigninSuccess])
+  }, [responseType, fetchProfileDetails])
 
   // Clears the googleAuth and googleUser state and disconnects the google api oauth2 client.
   const signOut = async () => {
@@ -75,7 +75,6 @@ export const useGoogleLogin = ({
       }
 
       setGoogleUser(null)
-      setGoogleAuthObj(null)
     }
   }
 
@@ -121,7 +120,7 @@ export const useGoogleLogin = ({
         if (!googleApi.current.auth2.getAuthInstance()) {
           const res = await googleApi.current.auth2.init(params)
 
-          if (autoSignIn === 'auto') handleSigninSuccess(res.currentUser.get())
+          if (autoSignIn === 'auto') fetchProfileDetails(res.currentUser.get())
         }
 
         if (autoSignIn === 'prompt') {
@@ -138,7 +137,7 @@ export const useGoogleLogin = ({
     discoveryDocs,
     fetchBasicProfile,
     googleApi,
-    handleSigninSuccess,
+    fetchProfileDetails,
     hostedDomain,
     autoSignIn,
     redirectUri,
@@ -158,5 +157,9 @@ export const useGoogleLogin = ({
     asyncEffect()
   }, [asyncEffect])
 
-  return { googleUser, signIn, googleAuthObj, signOut }
+  return {
+    googleUser,
+    signIn,
+    signOut,
+  }
 }

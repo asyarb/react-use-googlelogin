@@ -1,6 +1,7 @@
 # React-Use-GoogleLogin
 
-React hook to use the Google oAuth2 client JavaScript [library](https://developers.google.com/identity/protocols/OAuth2UserAgent).
+React hook to use the Google oAuth2 client JavaScript
+[library](https://developers.google.com/identity/protocols/OAuth2UserAgent).
 
 ## Install
 
@@ -80,17 +81,19 @@ useGoogleLogin({
 `useGoogleLogin` returns the following values via an object:
 
 - `googleUser`
-- `googleAuthObj`
 - `signIn`
 - `signOut`
 
 ### googleUser
 
-An object representing the logged in user. Contains the user's verifiable ID token in the `id_token` key. Refer to [https://developers.google.com/identity/sign-in/web/backend-auth](https://developers.google.com/identity/sign-in/web/backend-auth) on verifying ID tokens.
+A `GoogleAuth` instance representing the logged in user. Contains the user's
+verifiable ID token in the `id_token` key. Refer to
+[https://developers.google.com/identity/sign-in/web/backend-auth](https://developers.google.com/identity/sign-in/web/backend-auth)
+on verifying ID tokens.
 
-Contains basic user information within the `profileObj` key. 
+Contains basic user information within the `profileObj` key.
 
-If no user is logged in, this value object is set to `null`.
+If no user is logged in, this object is set to `null`.
 
 ```js
 const { googleUser } = useGoogleLogin()
@@ -101,21 +104,28 @@ if (googleUser) {
 }
 ```
 
+This object functionally acts as the same raw `GoogleAuth` object returned by
+`gapi.auth2.getAuthInstance()`. Use this object with the appropriate Google API
+functions to fetch other data from the user's Google profile.
+
+> `GoogleAuth` is a singleton class that allows you to get additional specific
+> data from a user's Google profile and request for additional scopes if they
+> are under the scopes specified in your developer console.
+
+Refer to
+[Google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication)
+for more info.
+
 ### signIn()
 
-A function that will prompt the user to login via Google. Will use the sign-in flow specified by the `uxMode` parameter. On success, `googleUser` and `googleAuthObj` will be set.
+A function that will prompt the user to login via Google. Will use the sign-in
+flow specified by the `uxMode` parameter. On success, `googleUser` and
+`googleAuthObj` will be set.
 
-If the sign in flow fails (the user closes the popup, etc.), this function will return `false`.
+If the sign in flow fails (the user closes the popup, etc.), this function will
+return `false`.
 
 ### signOut()
 
-A funciton that will sign out and disconnect the current oAuth2 client. Also sets the `googleUser` and `googleAuthObj` back to `null`.
-
-### googleAuthObj
-
-The raw `GoogleAuth` object returned by `gapi.auth2.getAuthInstance()`. This instance of `GoogleAuth` will have the current user already tied to it via `gapi.auth2.signIn()`, and have access to the scopes specfied in `scope`. Use this object with the appropriate Google API functions to fetch other data from the user's Google profile.
-
-> `GoogleAuth` is a singleton class that allows you to get additional specific data from a user's Google profile and request for additional scopes if they are under the scopes specified in your developer console. 
-
-Refer to [Google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication) for more info.
-
+A funciton that will sign out and disconnect the current oAuth2 client. Also
+sets the `googleUser` and `googleAuthObj` back to `null`.
