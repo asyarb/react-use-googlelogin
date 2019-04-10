@@ -143,7 +143,7 @@ const Page = () => {
   return (
     <div>
       <h2>Some regular stuff</h2>
-      {isLoggedIn && <p>I'm logged in!</p>}
+      {isLoggedIn && <p>Logged in!</p>}
     </div>
   )
 }
