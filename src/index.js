@@ -16,14 +16,16 @@ export const useGoogleLogin = ({
   const [googleUser, setGoogleUser] = React.useState(null)
   const googleApi = React.useRef()
 
+  // Error handling
   const allowedSignInFlows = ['auto', 'prompt', 'none']
   if (!allowedSignInFlows.includes(autoSignIn))
     throw new Error('autoSignIn must be of type: "none", "prompt" or "auto"')
-
   if (!clientId) throw new Error('clientId must be specified.')
 
-  // Called after a user has been successfully signed in. 'res' is a GoogleAuth() api object that can make API calls based on the scopes provided from hook params. We set the React state for this object here.
-  const fetchProfileDetails = React.useCallback(async res => {
+  // Called after a user has been successfully signed in. 'res' is a
+  // GoogleAuth() api object that can make API calls based on the
+  // scopes provided from hook params.
+  const fetchProfileDetails = res => {
     const basicProfile = res.getBasicProfile()
     const authResponse = res.getAuthResponse()
 
@@ -40,13 +42,11 @@ export const useGoogleLogin = ({
       givenName: basicProfile.getGivenName(),
       familyName: basicProfile.getFamilyName(),
     }
-
-    return res
-  }, [])
+  }
 
   // Signs in a user with the oAuth2 client and sets the GoogleAuth state.
-  // Returns: If successful, returns the GoogleAuth object for the associated user.
-  const signIn = React.useCallback(async () => {
+  // If successful, returns the GoogleAuth object for the associated user.
+  const signIn = async () => {
     try {
       const auth2 = googleApi.current.auth2.getAuthInstance()
 
@@ -55,14 +55,14 @@ export const useGoogleLogin = ({
       }
 
       const res = await auth2.signIn({ prompt: 'select_account' })
-      const googleUserObj = await fetchProfileDetails(res)
-      setGoogleUser(googleUserObj)
+      setGoogleUser(res)
+      fetchProfileDetails(res)
 
-      return googleUserObj
+      return res
     } catch {
       return false
     }
-  }, [responseType, fetchProfileDetails])
+  }
 
   // Clears the googleAuth and googleUser state and disconnects the google api oauth2 client.
   const signOut = async () => {
@@ -78,15 +78,14 @@ export const useGoogleLogin = ({
     }
   }
 
-  // Asynchronously retrieves Google's client-side oAuth script and inserts it into the <head> element.
+  // Asynchronously retrieves Google's client-side oAuth script and inserts it
+  // into the <head> element.
   // Returns: A promise that resolves to the window.gapi object.
   const createGoogleApi = React.useCallback(
     () =>
       new Promise(res => {
-        // First, check if the script has been included already.
         if (document.querySelector('#google-login')) return
 
-        // Otherwise, asynchronously get it.
         const element = document.createElement('script')
         element.id = 'google-login'
         element.onload = () => res(window.gapi)
@@ -97,8 +96,10 @@ export const useGoogleLogin = ({
     []
   )
 
-  // Initializes and oAuth2 client from a gapi object. If the 'autoSignIn' option is set to 'prompt' or 'auto', this will attempt to automatically authenticate once the oAuth2 client has been initialized.
-  const initOAuthClient = React.useCallback(() => {
+  // Initializes an oAuth2 client from the gapi object. If the 'autoSignIn' option is
+  // set to 'prompt' or 'auto', this will attempt to automatically authenticate
+  // once the oAuth2 client has been initialized.
+  const initOAuthClient = () => {
     const params = {
       client_id: clientId,
       cookie_policy: cookiePolicy,
@@ -130,36 +131,23 @@ export const useGoogleLogin = ({
         throw new Error(`${error}: ${details}`)
       }
     })
-  }, [
-    accessType,
-    clientId,
-    cookiePolicy,
-    discoveryDocs,
-    fetchBasicProfile,
-    googleApi,
-    fetchProfileDetails,
-    hostedDomain,
-    autoSignIn,
-    redirectUri,
-    responseType,
-    scope,
-    signIn,
-    uxMode,
-  ])
+  }
 
   // Allows for async/await in useEffect()
-  const asyncEffect = React.useCallback(async () => {
+  const asyncEffect = async () => {
     googleApi.current = await createGoogleApi()
     initOAuthClient()
-  }, [createGoogleApi, initOAuthClient])
+  }
 
   React.useEffect(() => {
     asyncEffect()
-  }, [asyncEffect])
+  }, [])
 
+  // Hook API
   return {
     googleUser,
     signIn,
     signOut,
+    isLoggedIn: !!googleUser,
   }
 }
