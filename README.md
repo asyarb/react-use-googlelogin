@@ -1,4 +1,4 @@
-<h1 align="center">React-Use-googlelogin</h1>
+<h1 align="center">React-Use-Googlelogin</h1>
 
 <p align="center">
   <img src="./assets/readme.png" height="50px">
