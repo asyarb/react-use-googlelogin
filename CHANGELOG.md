@@ -1,8 +1,16 @@
 # Change Log
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version)
-for commit guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+# [0.4.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.3.1...v0.4.0) (2019-04-10)
+
+
+### Features
+
+* cleanup api, add isLoggedIn bool ([642ba04](https://github.com/asyarb/react-use-googlelogin/commit/642ba04))
+* cleanup api, add isLoggedIn() ([a91f144](https://github.com/asyarb/react-use-googlelogin/commit/a91f144))
+
+
 
 ## [0.3.1](https://github.com/asyarb/react-use-googlelogin/compare/v0.3.0...v0.3.1) (2019-04-07)
 
