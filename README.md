@@ -184,15 +184,15 @@ useGoogleLogin({
 
 ## Gotchas
 
-### The user is lost if I refresh the page
+### The user is lost if I refresh the page!
 
-This is "intended". I didn't want to make any assumptions as to how someone
+This is "intended". I didn't want to make any assumptions as to how developers
 would want to persist user information, so it's left up to the developer to do
 so.
 
 The hook does provide a `autoSignIn` option that can automatically
 re-authenticate a user when the app refreshes, but this may not provide the most
-ideal UX for some use-cases.
+ideal UX for some use cases.
 
 For a more seamless UX, a solution leveraging `localStorage` or cookies is
 recommended.
