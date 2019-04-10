@@ -2,6 +2,9 @@
 
 > Google client oAuth2 + React Hooks
 
+[![NPM](https://img.shields.io/npm/v/react-use-googlelogin.svg?&color=green)](https://www.npmjs.com/package/react-use-googlelogin)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-use-googlelogin.svg?logoColor=brightgreen)
+
 Use
 [Google's oAuth2](https://developers.google.com/identity/protocols/OAuth2UserAgent)
 with React! This is a small wrapper over Google's oAuth2 JavaScript client
