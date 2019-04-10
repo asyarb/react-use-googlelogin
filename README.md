@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/readme.png" width="130px">
+  <img src="./assets/readme.png" height="50px">
 </p>
 
 <h1 align="center">react-use-googlelogin</h1>
