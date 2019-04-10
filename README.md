@@ -1,8 +1,6 @@
-<h1 align="center">React-Use-Googlelogin</h1>
+# react-use-googlelogin
 
-<p align="center">
-  <img src="./assets/readme.png" height="50px">
-</p>
+<img src="./assets/readme.png" height="50px">
 
 [![NPM](https://img.shields.io/npm/v/react-use-googlelogin.svg?&color=green)](https://www.npmjs.com/package/react-use-googlelogin)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-use-googlelogin.svg?logoColor=brightgreen)
