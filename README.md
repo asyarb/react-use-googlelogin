@@ -28,7 +28,7 @@ on creating a `clientID` for your application.
 
 ### Sample Using Context
 
-```js
+```jsx
 import React from 'react'
 import { useGoogleLogin } from 'react-use-googlelogin'
 
@@ -79,7 +79,7 @@ Contains basic user information within the `profileObj` key.
 
 If no user is logged in, this value is `null`.
 
-```js
+```jsx
 const Profile = () => {
   const { googleUser } = useGoogleLogin()
 
@@ -116,7 +116,7 @@ wait for a re-render to see the hook value updated.
 
 If the sign in flow fails for any reason, `signIn()` returns `false`.
 
-```js
+```jsx
 const GoogleLoginButton = () => {
   const { signIn } = useGoogleLogin()
 
@@ -136,14 +136,14 @@ Signs out the current user and disconnects the current oAuth2 client. Sets the
 A boolean that is `true` when a user is actively logged in, and `false` when
 otherwise.
 
-```js
+```jsx
 const Page = () => {
   const { isLoggedIn } = useGoogleLogin()
 
   return (
     <div>
       <h2>Some regular stuff</h2>
-      {isLoggedIn && <p>Logged in!</p>}
+      {isLoggedIn && <p>We are logged in!</p>}
     </div>
   )
 }
