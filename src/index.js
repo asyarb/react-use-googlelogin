@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState, useRef } from 'react'
 
 export const useGoogleLogin = ({
   clientId,
@@ -13,8 +13,8 @@ export const useGoogleLogin = ({
   autoSignIn = 'none',
   uxMode = 'popup',
 }) => {
-  const [googleUser, setGoogleUser] = React.useState(null)
-  const googleApi = React.useRef()
+  const [googleUser, setGoogleUser] = useState(null)
+  const googleApi = useRef()
 
   // Error handling
   const allowedSignInFlows = ['auto', 'prompt', 'none']
@@ -81,20 +81,17 @@ export const useGoogleLogin = ({
   // Asynchronously retrieves Google's client-side oAuth script and inserts it
   // into the <head> element.
   // Returns: A promise that resolves to the window.gapi object.
-  const createGoogleApi = React.useCallback(
-    () =>
-      new Promise(res => {
-        if (document.querySelector('#google-login')) return
+  const createGoogleApi = () =>
+    new Promise(res => {
+      if (document.querySelector('#google-login')) return
 
-        const element = document.createElement('script')
-        element.id = 'google-login'
-        element.onload = () => res(window.gapi)
-        element.src = 'https://apis.google.com/js/api.js'
+      const element = document.createElement('script')
+      element.id = 'google-login'
+      element.onload = () => res(window.gapi)
+      element.src = 'https://apis.google.com/js/api.js'
 
-        document.head.appendChild(element)
-      }),
-    []
-  )
+      document.head.appendChild(element)
+    })
 
   // Initializes an oAuth2 client from the gapi object. If the 'autoSignIn' option is
   // set to 'prompt' or 'auto', this will attempt to automatically authenticate
@@ -139,7 +136,7 @@ export const useGoogleLogin = ({
     initOAuthClient()
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     asyncEffect()
   }, [])
 
