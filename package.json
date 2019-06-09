@@ -31,22 +31,22 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@commitlint/cli": "^7.5.2",
-    "@commitlint/config-conventional": "^7.5.0",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^1.6.0",
-    "husky": "^1.3.1",
-    "prettier": "^1.16.4",
+    "husky": "^2.4.0",
+    "prettier": "^1.18.2",
     "react": "^16.8.6",
     "rimraf": "^2.6.3",
-    "rollup": "^1.7.4",
+    "rollup": "^1.14.4",
     "rollup-plugin-babel": "4.3.2",
-    "standard-version": "^5.0.2"
+    "standard-version": "^6.0.1"
   },
   "peerDependencies": {
     "react": ">=16.8"
