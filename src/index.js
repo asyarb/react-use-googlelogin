@@ -145,6 +145,6 @@ export const useGoogleLogin = ({
     googleUser,
     signIn,
     signOut,
-    isLoggedIn: !!googleUser,
+    isLoggedIn: Boolean(googleUser),
   }
 }
