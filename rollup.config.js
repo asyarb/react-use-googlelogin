@@ -1,5 +1,10 @@
 import babel from 'rollup-plugin-babel'
+import clear from 'rollup-plugin-clear'
+import filesize from 'rollup-plugin-filesize'
+import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
+
+const isProd = process.env.NODE_ENV === 'production'
 
 const makeExternalPredicate = externalArr => {
   if (externalArr.length === 0) {
@@ -12,12 +17,19 @@ const makeExternalPredicate = externalArr => {
 export default {
   input: 'src/index.js',
   output: [
-    { file: pkg.main, format: 'cjs' },
-    { file: pkg.module, format: 'es' },
+    { file: pkg.main, format: 'cjs', sourcemap: true },
+    { file: pkg.module, format: 'es', sourcemap: true },
   ],
   external: makeExternalPredicate([
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
   ]),
-  plugins: [babel()],
+  plugins: [
+    clear({
+      targets: ['dist'],
+    }),
+    babel(),
+    isProd && terser(),
+    filesize(),
+  ],
 }

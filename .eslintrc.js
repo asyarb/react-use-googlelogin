@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     'no-var': 'warn',
     'no-unused-vars': 'warn',
+    'no-undef': 'error',
 
     // react plugin - options
     'react/jsx-uses-react': 'warn',
@@ -12,6 +13,10 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
   },
   parser: 'babel-eslint',
+  env: {
+    browser: true,
+    node: true,
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
