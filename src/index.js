@@ -130,13 +130,12 @@ export const useGoogleLogin = ({
     })
   }
 
-  // Allows for async/await in useEffect()
-  const asyncEffect = async () => {
-    googleApi.current = await createGoogleApi()
-    initOAuthClient()
-  }
-
   useEffect(() => {
+    const asyncEffect = async () => {
+      googleApi.current = await createGoogleApi()
+      initOAuthClient()
+    }
+
     asyncEffect()
   }, [])
 
