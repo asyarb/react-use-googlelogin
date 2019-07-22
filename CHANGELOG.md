@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.9.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.8.0...v0.9.0) (2019-07-22)
+
+
+### Features
+
+* utilize currentUser listener to update hook state ([7f6c009](https://github.com/asyarb/react-use-googlelogin/commit/7f6c009))
+
+
+
 ## [0.8.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.7.0...v0.8.0) (2019-07-22)
 
 
