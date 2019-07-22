@@ -4,7 +4,7 @@ import filesize from 'rollup-plugin-filesize'
 import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
-const isProd = process.env.NODE_ENV === 'production'
+const IS_PROD = process.env.NODE_ENV === 'production'
 
 const makeExternalPredicate = externalArr => {
   if (externalArr.length === 0) {
@@ -29,7 +29,7 @@ export default {
       targets: ['dist'],
     }),
     babel(),
-    isProd && terser(),
+    IS_PROD && terser(),
     filesize(),
   ],
 }

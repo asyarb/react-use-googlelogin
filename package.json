@@ -5,11 +5,11 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "scripts": {
-    "build": "NODE_ENV=production rollup -c",
+    "build": "cross-env NODE_ENV=production rollup -c",
     "watch": "yarn build --watch",
     "format": "prettier --write 'src/**/*.js' 'rollup.config.js' 'README.md'",
     "prebuild": "rimraf dist",
-    "prepublish": "NODE_ENV=production yarn build",
+    "prepublish": "cross-env NODE_ENV=production yarn build",
     "release": "standard-version",
     "test": "jest"
   },
@@ -24,7 +24,9 @@
     "oauth2",
     "hooks",
     "login",
-    "sso"
+    "sso",
+    "easy",
+    "gSuite"
   ],
   "author": "Anthony Yarbrough",
   "license": "MIT",
@@ -34,6 +36,7 @@
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "babel-eslint": "^10.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-react": "^7.14.2",
     "eslint-plugin-react-hooks": "^1.6.1",
