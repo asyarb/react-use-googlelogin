@@ -74,13 +74,14 @@ export const useGoogleLogin = ({
 
   const [state, setState] = useState(() => ({
     googleUser: undefined,
+    auth2: undefined,
     isSignedIn: false,
     isInitialized: false,
-    auth2: undefined,
   }))
 
   /**
    * Attempts to sign in a user with Google's oAuth2 client.
+   * @public
    *
    * @param {Object} options - Configutation parameters for GoogleAuth.signIn()
    *
@@ -95,12 +96,6 @@ export const useGoogleLogin = ({
       const googleUser = await auth2.signIn(options)
       if (fetchBasicProfile) getBasicProfile(googleUser)
 
-      setState(state => ({
-        ...state,
-        googleUser,
-        isSignedIn: googleUser.isSignedIn(),
-      }))
-
       return googleUser
     } catch {
       return undefined
@@ -109,6 +104,7 @@ export const useGoogleLogin = ({
 
   /**
    * Signs out and disconnects the oAuth2 client. Sets `googleUser` to undefined.
+   * @public
    *
    * @returns true if successful.
    */
@@ -119,14 +115,28 @@ export const useGoogleLogin = ({
 
     await auth2.signOut()
     auth2.disconnect()
-    setState(state => ({
-      ...state,
-      googleUser: undefined,
-      auth2: undefined,
-      isSignedIn: false,
-    }))
 
     return true
+  }
+
+  /**
+   * Callback function passed to Google's auth listener. Updates the hook's state based
+   * on the type of auth change event.
+   * @private
+   *
+   * @param {Object} googleUser - GoogleUser object for the corresponding user whose
+   * auth state has changed.
+   *
+   * @returns undefined
+   */
+  const handleAuthChange = googleUser => {
+    const isSignedIn = googleUser.isSignedIn()
+
+    setState(state => ({
+      ...state,
+      googleUser: isSignedIn ? googleUser : undefined,
+      isSignedIn,
+    }))
   }
 
   useEffect(() => {
@@ -154,10 +164,12 @@ export const useGoogleLogin = ({
         setState(state => ({
           ...state,
           googleUser,
-          isInitialized: true,
           auth2,
           isSignedIn,
+          isInitialized: true,
         }))
+
+        auth2.currentUser.listen(handleAuthChange)
 
         if (autoSignIn === 'prompt') signIn({ prompt: 'select_account' })
         if (autoSignIn === 'auto') signIn({ prompt: 'none' })
