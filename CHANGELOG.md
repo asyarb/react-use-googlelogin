@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.7.0...v0.8.0) (2019-07-22)
+
+
+### Bug Fixes
+
+* use google's session storage to persist users ([06d21d5](https://github.com/asyarb/react-use-googlelogin/commit/06d21d5))
+
+
+### Features
+
+* sessionStorage persistence ([05ddbf8](https://github.com/asyarb/react-use-googlelogin/commit/05ddbf8))
+* update deps and move async effect into useEffect ([6adde05](https://github.com/asyarb/react-use-googlelogin/commit/6adde05))
+
+
+
 ## [0.7.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.6.0...v0.7.0) (2019-06-28)
 
 
