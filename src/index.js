@@ -2,14 +2,13 @@ import { useState, useEffect } from 'react'
 import { loadDynamicScript } from './loadDynamicScript'
 
 const GOOGLE_API_URL = 'https://apis.google.com/js/api.js'
-const STORAGE_KEY = '___GOOGLE_LOGIN___'
-const IS_BROWSER = typeof window !== 'undefined'
+const DOM_ID = '___GOOGLE_LOGIN___'
 
 /**
  * Retrieves basic profile information for a given user.
  * @private
  *
- * @param {*} user - GoogleUser instance to get basic info on.
+ * @param {Object} user - GoogleUser instance to get basic info on.
  *
  * @returns undefined
  */
@@ -66,6 +65,7 @@ export const useGoogleLogin = ({
   fetchBasicProfile = true,
   autoSignIn = 'none',
   uxMode = 'popup',
+  persist = true,
 }) => {
   const allowedSignInFlows = ['auto', 'prompt', 'none']
   if (!clientId) throw new Error('clientId must be specified.')
@@ -73,9 +73,8 @@ export const useGoogleLogin = ({
     throw new Error('autoSignIn must be of type: "none", "prompt" or "auto"')
 
   const [state, setState] = useState(() => ({
-    googleUser: IS_BROWSER
-      ? JSON.parse(window.sessionStorage.getItem(STORAGE_KEY))
-      : undefined,
+    googleUser: undefined,
+    isSignedIn: false,
     isInitialized: false,
     auth2: undefined,
   }))
@@ -99,9 +98,8 @@ export const useGoogleLogin = ({
       setState(state => ({
         ...state,
         googleUser,
+        isSignedIn: googleUser.isSignedIn(),
       }))
-
-      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(googleUser))
 
       return googleUser
     } catch {
@@ -125,14 +123,14 @@ export const useGoogleLogin = ({
       ...state,
       googleUser: undefined,
       auth2: undefined,
+      isSignedIn: false,
     }))
-    window.sessionStorage.removeItem(STORAGE_KEY)
 
     return true
   }
 
   useEffect(() => {
-    loadDynamicScript(STORAGE_KEY, GOOGLE_API_URL, () => {
+    loadDynamicScript(DOM_ID, GOOGLE_API_URL, () => {
       const params = {
         client_id: clientId,
         cookie_policy: cookiePolicy,
@@ -147,7 +145,19 @@ export const useGoogleLogin = ({
 
       const handleLoad = async () => {
         const auth2 = await window.gapi.auth2.init(params)
-        setState(state => ({ ...state, isInitialized: true, auth2 }))
+        const googleUser = auth2.currentUser.get()
+        const isSignedIn = googleUser.isSignedIn()
+
+        if (persist && fetchBasicProfile && isSignedIn)
+          getBasicProfile(googleUser)
+
+        setState(state => ({
+          ...state,
+          googleUser,
+          isInitialized: true,
+          auth2,
+          isSignedIn,
+        }))
 
         if (autoSignIn === 'prompt') signIn({ prompt: 'select_account' })
         if (autoSignIn === 'auto') signIn({ prompt: 'none' })
@@ -161,6 +171,5 @@ export const useGoogleLogin = ({
     ...state,
     signIn,
     signOut,
-    isSignedIn: Boolean(state.googleUser),
   }
 }
