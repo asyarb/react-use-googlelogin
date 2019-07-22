@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.10.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.9.0...v0.10.0) (2019-07-22)
+
+
+### Features
+
+* include browserslist configuration ([73cecdb](https://github.com/asyarb/react-use-googlelogin/commit/73cecdb))
+
+
+### BREAKING CHANGES
+
+* dropped IE11 support
+
+
+
 ## [0.9.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.8.0...v0.9.0) (2019-07-22)
 
 
