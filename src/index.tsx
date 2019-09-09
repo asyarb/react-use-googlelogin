@@ -33,8 +33,8 @@ interface HookConfig {
 }
 
 interface HookState {
-  googleUser: gapi.auth2.GoogleUser | undefined
-  auth2: gapi.auth2.GoogleAuth | undefined
+  googleUser: GoogleUser | null
+  auth2: gapi.auth2.GoogleAuth | null
   isSignedIn: boolean
   isInitialized: boolean
 }
@@ -89,8 +89,8 @@ export const useGoogleLogin = ({
     throw new Error('autoSignIn must be of type: "none", "prompt" or "auto"')
 
   const [state, setState] = useState<HookState>(() => ({
-    googleUser: undefined,
-    auth2: undefined,
+    googleUser: null,
+    auth2: null,
     isSignedIn: false,
     isInitialized: false,
   }))
@@ -151,7 +151,7 @@ export const useGoogleLogin = ({
 
     setState(state => ({
       ...state,
-      googleUser: isSignedIn ? googleUser : undefined,
+      googleUser: isSignedIn ? googleUser : null,
       isSignedIn,
     }))
   }
