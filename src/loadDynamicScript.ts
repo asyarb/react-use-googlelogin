@@ -3,13 +3,17 @@
  * such as Stripe checkout and google maps.
  * @private
  *
- * @param {string} id - ID to give the created DOM node.
- * @param {string} src - URL to load the script from.
- * @param {function} callback - Callback to run when the script is loaded.
+ * @param id - ID to give the created DOM node.
+ * @param src - URL to load the script from.
+ * @param callback - Callback to run when the script is loaded.
  *
- * @returns true if the script at the specified ID has been loaded, undefined otherwise.
+ * @returns `true` if the script at the specified ID has been loaded, undefined otherwise.
  */
-export const loadDynamicScript = (id, src, callback) => {
+export const loadDynamicScript = (
+  id: string,
+  src: string,
+  callback: () => void
+) => {
   const isLoaded = Boolean(document.getElementById(id))
   if (isLoaded) return
 
