@@ -1,3 +1,6 @@
 node_modules
-dist/
+dist
 .log
+.rts2_cache_cjs
+.rts2_cache_esm
+.cache

@@ -107,8 +107,7 @@ for more info.
 ### auth2
 
 The `GoogleAuth` instance that was initialized when the hook was run. You
-normally shouldn't need to use this directly, but it is provided directly if
-needed.
+normally shouldn't need to use this directly, but it is provided if needed.
 
 > GoogleAuth is a singleton class that provides methods to allow the user to
 > sign in with a Google account, get the user's current sign-in status, get
@@ -176,33 +175,14 @@ section for more information about using `isInitialized`.
 
 Specify any of the options defined below:
 
-```js
-useGoogleLogin({
-  clientId: String!,
-  persist: Boolean,
-  hostedDomain: String,
-  discoveryDocs: Array,
-  responseType: String,
-  redirectUri: String,
-  scope: String,
-  accessType: String,
-  cookiePolicy: String,
-  fetchBasicProfile: Boolean,
-  autoSignIn: String,
-  uxMode: String
-})
-```
-
 | Name              | Type    | Default              | Description                                                                                                                                                                                                                             |     |
 | ----------------- | ------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
 | clientId          | String  | ---                  | **Required**. The clientID for your application from Google's developer console.                                                                                                                                                        |     |
 | persist           | Boolean | true                 | Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.                                                                                                                                                  |     |
 | hostedDomain      | String  | ---                  | The G Suite domain to which users must belong to sign in. If blank, all google accounts can login.                                                                                                                                      |     |
 | autoSignIn        | String  | 'none'               | Enum allowing either `none`, `prompt` or `auto`. If set to `prompt`, will attempt to automatically sign the user in with the full ux flow (popup, redirect). If set to `auto`, will attempt to automatically login without any ux flow. |     |
-| discoveryDocs     | Array   | []                   | For info on discovery docs, refer to: https://developers.google.com/discovery/v1/using                                                                                                                                                  |     |
 | redirectUri       | String  | ''                   | If `uxMode` is set to `redirect`, this is the address a user will be sent to after resolving the Google auth flow.                                                                                                                      |     |
 | scope             | String  | 'profile email'      | The scopes to request, as a space-delimited string. Optional if `fetch_basic_profile` is set to true.                                                                                                                                   |     |
-| accessType        | String  | 'online'             | An enum allowing either `online` or `offline`. If `offline` with `responseType` of `code`, the hook will return a refresh token in `googleUser`.                                                                                        |     |
 | cookiePolicy      | String  | 'single_host_origin' | The domains for which to create sign-in cookies. Either a URI, `single_host_origin`, or none                                                                                                                                            |     |
 | fetchBasicProfile | Boolean | true                 | Allows fetching of users' basic profile information when they sign in. Adds 'profile', 'email' and 'openid' to the requested scopes.                                                                                                    |     |
 | uxMode            | String  | 'popup'              | Enum of either `popup` or `redirect`. If `redirect`, will redirect the user to the uri specified in `redirectUri` after login flow.                                                                                                     |     |
@@ -211,7 +191,7 @@ useGoogleLogin({
 
 By default, `useGoogleLogin` will handle persisting `googleUser` on page refresh
 by using the stored values in `sessionStorage` that Google's `gapi` client
-stores automatically.
+automatically stores.
 
 If you wish to opt-out of this behavior, set `persist` to `false` when calling
 `useGoogleLogin()`.
