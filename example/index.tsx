@@ -16,7 +16,7 @@ export const Example = () => {
           <h1>{googleUser.profileObj.name}</h1>
           <img
             src={googleUser.profileObj.imageUrl}
-            alt="Profile"
+            alt="Profile avatar"
             style={{ borderRadius: '50%' }}
           />
         </div>
