@@ -65,7 +65,7 @@ const GoogleLoginButton = () => {
 - `auth2`
 - `signIn`
 - `signOut`
-- `isLoggedIn`
+- `isSignedIn`
 - `isInitialized`
 
 ### googleUser
@@ -147,19 +147,19 @@ information on the available options, refer to:
 Signs out the current user and disconnects the current oAuth2 client. Sets the
 `googleUser` back to `null` and clears all persistent session storage.
 
-### isLoggedIn
+### isSignedIn
 
 A boolean that is `true` when a user is actively logged in, and `false` when
 otherwise.
 
 ```jsx
 const Page = () => {
-  const { isLoggedIn } = useGoogleLogin()
+  const { isSignedIn } = useGoogleLogin()
 
   return (
     <div>
       <h2>Some regular stuff</h2>
-      {isLoggedIn && <p>We are logged in!</p>}
+      {isSignedIn && <p>We are logged in!</p>}
     </div>
   )
 }
@@ -214,7 +214,7 @@ not.
 // In this case, a user has already logged in but prior, but has refreshed the page:
 
 const Page = () => {
-  const { isLoggedIn, isInitalized } = useGoogleLogin()
+  const { isSignedIn, isInitalized } = useGoogleLogin()
 
   return (
     <div>
