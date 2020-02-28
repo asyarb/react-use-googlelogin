@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { useGoogleLogin } from '../.'
+import { useGoogleLogin } from '../src'
 
 export const Example = () => {
   const { googleUser, signIn } = useGoogleLogin({
@@ -9,16 +9,13 @@ export const Example = () => {
   })
 
   return (
-    <div style={{ fontFamily: 'system-ui' }}>
-      <button onClick={() => signIn()}>Sign in</button>
-      {googleUser && googleUser.profileObj && (
+    <div>
+      <button onClick={signIn}>Sign in</button>
+
+      {googleUser?.profileObj && (
         <div>
           <h1>{googleUser.profileObj.name}</h1>
-          <img
-            src={googleUser.profileObj.imageUrl}
-            alt="Profile avatar"
-            style={{ borderRadius: '50%' }}
-          />
+          <img src={googleUser.profileObj.imageUrl} alt="Profile avatar" />
         </div>
       )}
     </div>
