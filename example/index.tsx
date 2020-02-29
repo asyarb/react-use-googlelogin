@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { useGoogleLogin } from '../src'
+import { useGoogleLogin } from '../dist'
 
 export const Example = () => {
   const { googleUser, signIn } = useGoogleLogin({
@@ -10,7 +10,7 @@ export const Example = () => {
 
   return (
     <div>
-      <button onClick={signIn}>Sign in</button>
+      <button onClick={() => signIn()}>Sign in</button>
 
       {googleUser?.profileObj && (
         <div>
