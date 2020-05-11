@@ -110,7 +110,7 @@ export const useGoogleLogin = ({
   const handleAuthChange = (googleUser: gapi.auth2.GoogleUser) => {
     const isSignedIn = googleUser.isSignedIn()
 
-    setState(state => ({
+    setState((state) => ({
       ...state,
       googleUser: isSignedIn ? googleUser : null,
       isSignedIn,
@@ -129,7 +129,7 @@ export const useGoogleLogin = ({
     }
 
     const handleLoad = () => {
-      window.gapi.auth2.init(config).then(googleAuth => {
+      window.gapi.auth2.init(config).then((googleAuth) => {
         const auth2 = googleAuth
         const googleUser = auth2.currentUser.get()
         const isSignedIn = googleUser.isSignedIn()
