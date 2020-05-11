@@ -101,6 +101,13 @@ export interface HookConfig {
    * Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.
    */
   persist?: boolean
+
+  /**
+   * Determines whether to call GoogleAuth.signIn or GoogleAuth.grantOfflineAccess
+   *
+   * @default `false`
+   */
+  requestOfflineAccess?: boolean
 }
 
 export interface HookState {

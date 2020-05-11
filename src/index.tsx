@@ -21,6 +21,7 @@ export const useGoogleLogin = ({
   autoSignIn = 'none',
   uxMode = 'popup',
   persist = true,
+  requestOfflineAccess = false,
 }: HookConfig) => {
   if (!clientId) throw new Error('clientId must be specified.')
   if (!['auto', 'prompt', 'none'].includes(autoSignIn))
@@ -62,21 +63,25 @@ export const useGoogleLogin = ({
    * Attempts to sign in a user with Google's oAuth2 client.
    * @public
    *
-   * @param options - Configutation parameters for GoogleAuth.signIn()
+   * @param options - Configutation parameters for GoogleAuth.signIn() or GoogleAuth.grantOfflineAccess()
    *
    * @throws Error if using offline access with autoSignIn set to 'auto'.
-   * @returns The GoogleUser instance for the signed in user.
+   * @returns The GoogleUser instance for the signed in user, or the auth code if requesting offline access
    */
   const signIn = async (
     options?: gapi.auth2.SigninOptions
-  ): Promise<GoogleUser | null> => {
+  ): Promise<GoogleUser | string | null> => {
     const auth2 = window.gapi.auth2.getAuthInstance()
 
     try {
-      const googleUser = await auth2.signIn(options)
-      if (fetchBasicProfile) getAndSetBasicProfile(googleUser)
-
-      return googleUser as GoogleUser
+      if (requestOfflineAccess) {
+        const { code } = await auth2.grantOfflineAccess()
+        return code
+      } else {
+        const googleUser = await auth2.signIn(options)
+        if (fetchBasicProfile) getAndSetBasicProfile(googleUser)
+        return googleUser as GoogleUser
+      }
     } catch {
       return null
     }
@@ -110,7 +115,7 @@ export const useGoogleLogin = ({
   const handleAuthChange = (googleUser: gapi.auth2.GoogleUser) => {
     const isSignedIn = googleUser.isSignedIn()
 
-    setState((state) => ({
+    setState(state => ({
       ...state,
       googleUser: isSignedIn ? googleUser : null,
       isSignedIn,
@@ -129,7 +134,7 @@ export const useGoogleLogin = ({
     }
 
     const handleLoad = () => {
-      window.gapi.auth2.init(config).then((googleAuth) => {
+      window.gapi.auth2.init(config).then(googleAuth => {
         const auth2 = googleAuth
         const googleUser = auth2.currentUser.get()
         const isSignedIn = googleUser.isSignedIn()
