@@ -1,0 +1,18 @@
+{
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.jsx",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "alias": {
+    "react": "../../node_modules/react",
+    "react-dom": "../../node_modules/react-dom"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4"
+  },
+  "dependencies": {
+    "react-use-googlelogin": "^0.12.1"
+  }
+}
