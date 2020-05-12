@@ -131,11 +131,12 @@ export const useGoogleLogin = ({
    * @param googleUser - GoogleUser object for the corresponding user whose
    * auth state has changed.
    */
-  const handleAuthChange = (googleUser: gapi.auth2.GoogleUser) => {
+  const handleAuthChange = (googleUser: GoogleUser) => {
     const isSignedIn = googleUser.isSignedIn()
     const auth2 = window.gapi.auth2.getAuthInstance()
 
-    if (fetchBasicProfile && isSignedIn) getAndSetBasicProfile(googleUser)
+    if (fetchBasicProfile && isSignedIn && !googleUser.profileObj)
+      getAndSetBasicProfile(googleUser)
 
     setState({
       auth2,
