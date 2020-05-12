@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.12.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.11.2...v0.12.0) (2020-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Setting `persist` to `false` will now ensure that the user is not persisted on page refresh.
+
+Removed `autoSignIn` from config since this use case is handled by `persist`.
+
+### Features
+
+* always get token data ([4021e7f](https://github.com/asyarb/react-use-googlelogin/commit/4021e7fafa9b0e65a0268c6ebfd8a743340eefc6))
+* grantOfflineAccess function from hook ([8ff9a02](https://github.com/asyarb/react-use-googlelogin/commit/8ff9a02f44d913a6d0ac406c33e12a4421c37428))
+
+
+### Bug Fixes
+
+* crashing when granting offline access ([4660c1d](https://github.com/asyarb/react-use-googlelogin/commit/4660c1d03cb90cca6e680a24e007525945711fff))
+* only fetch basic profile when needed in handle auth change ([eacdbad](https://github.com/asyarb/react-use-googlelogin/commit/eacdbad5f0086b8505bc62ce0e638a28e9e1e32f))
+* typo for offline access dev log ([46d1feb](https://github.com/asyarb/react-use-googlelogin/commit/46d1feb2b5b352f0f2ae4b4aaaa38b93a50ad8a2))
+* typo in code doc ([f8d9283](https://github.com/asyarb/react-use-googlelogin/commit/f8d9283f5fe231514800b34d50686b9a1ced8cca))
+
 ### [0.11.2](https://github.com/asyarb/react-use-googlelogin/compare/v0.11.1...v0.11.2) (2020-02-29)
 
 ### [0.11.1](https://github.com/asyarb/react-use-googlelogin/compare/v0.11.0...v0.11.1) (2019-10-11)
