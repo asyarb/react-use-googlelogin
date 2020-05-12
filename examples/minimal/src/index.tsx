@@ -6,8 +6,7 @@ import './index.css'
 
 const App = () => {
   const { signIn, signOut, googleUser, isSignedIn } = useGoogleLogin({
-    clientId:
-      '253609759251-4m5j92ji446hv4h8e1jefbi63u40ctr1.apps.googleusercontent.com',
+    clientId: 'your-clientId',
   })
 
   return (
