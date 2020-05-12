@@ -1,0 +1,16 @@
+{
+  "include": ["src", "../dist"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "strict": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "lib": ["dom", "esnext"],
+    "baseUrl": ".",
+    "rootDir": "./"
+  }
+}

@@ -4,5 +4,6 @@
   "trailingComma": "es5",
   "singleQuote": true,
   "printWidth": 80,
-  "proseWrap": "always"
+  "proseWrap": "always",
+  "arrowParens": "avoid"
 }

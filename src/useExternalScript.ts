@@ -26,5 +26,7 @@ export const useExternalScript = (
 
     if (callback) script.onload = callback
     if (isLoaded && callback) callback()
-  }, []) // We're missing deps here, but we really only want to call this once.
+    // We're missing deps here, but we really only want to call this once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 }

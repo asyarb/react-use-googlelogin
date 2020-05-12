@@ -9,8 +9,6 @@ Use
 with React! This is a small wrapper around Google's oAuth2 JavaScript client
 library for accessing Google login functionality in your React app.
 
-You can find a demo here on [Code Sandbox](https://codesandbox.com). _TODO_
-
 ## Install
 
 ```bash
@@ -59,25 +57,36 @@ const GoogleLoginButton = () => {
 }
 ```
 
+### Examples
+
+These examples are in progress, but will be available soon:
+
+- Minimal
+- Minimal w/ context
+- Minimal w/ context (TypeScript)
+
+## Hook Return Values
+
 **As a React Hook**, you can destructure these values:
 
 - `googleUser`
-- `auth2`
 - `signIn`
 - `signOut`
 - `isSignedIn`
 - `isInitialized`
+- `grantOfflineAccess`
+- `auth2`
 
 ### googleUser
 
-A `GoogleUser` instance representing the logged in user. Contains the user's
+An instance of `GoogleUser` representing the logged in user. Contains the user's
 verifiable ID token in the `id_token` key. Refer to
 [Google's docs](https://developers.google.com/identity/sign-in/web/backend-auth)
 on verifying ID tokens on your backend.
 
 By default, contains basic user information within the `profileObj` key.
 
-If no user is logged in, this value is `null`.
+If no user is logged in, this will be `undefined`.
 
 ```jsx
 const Profile = () => {
@@ -104,19 +113,6 @@ Refer to
 [Google's docs](https://developers.google.com/identity/sign-in/web/reference#users)
 for more info.
 
-### auth2
-
-The `GoogleAuth` instance that was initialized when the hook was run. You
-normally shouldn't need to use this directly, but it is provided if needed.
-
-> GoogleAuth is a singleton class that provides methods to allow the user to
-> sign in with a Google account, get the user's current sign-in status, get
-> specific data from the user's Google profile, request additional scopes, and
-> sign out from the current account.
-
-For more information, refer to
-[Google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication)
-
 ### signIn()
 
 A function that will prompt the user to login via Google. Will use the sign-in
@@ -126,7 +122,7 @@ On success, this function returns `googleUser`. This is useful if immediate
 access to `googleUser` is needed following a sign in. We would otherwise need to
 wait for a re-render to see the hook value updated.
 
-If the sign in flow fails for any reason, `signIn()` returns `undefined`.
+If the sign in flow fails for any reason, `signIn()` returns `false`.
 
 ```jsx
 const GoogleLoginButton = () => {
@@ -145,11 +141,11 @@ information on the available options, refer to:
 ### signOut()
 
 Signs out the current user and disconnects the current oAuth2 client. Sets the
-`googleUser` back to `null` and clears all persistent session storage.
+`googleUser` back to `undefined` and clears all persistent session storage.
 
 ### isSignedIn
 
-A boolean that is `true` when a user is actively logged in, and `false` when
+A boolean that is `true` when a user is actively logged in, and `false`
 otherwise.
 
 ```jsx
@@ -158,7 +154,7 @@ const Page = () => {
 
   return (
     <div>
-      <h2>Some regular stuff</h2>
+      <h2>Some unauthenticated content.</h2>
       {isSignedIn && <p>We are logged in!</p>}
     </div>
   )
@@ -171,27 +167,56 @@ A boolean that is `true` once the `window.gapi` object is directly available,
 and `false` otherwise. Please see the [persisiting users](#persisting-users)
 section for more information about using `isInitialized`.
 
+### grantOfflineAccess()
+
+Requests the user to access the specified `scopes` while offline. This is useful
+if you wish to perform API requests on behalf of the user from a backend/secure
+environment you control.
+
+If the user grants access, this function will return the authorization `code`
+that can be exchanged for a `refreshToken` and `accessTokens` on your backend.
+If a user is not signed in and grants offline access, this function will also
+sign the user in.
+
+For more information on online access and integrating it with your backend refer
+to:
+
+- [Google's server docs](https://developers.google.com/identity/protocols/oauth2/web-server#exchange-authorization-code)
+- [Google's client docs](https://developers.google.com/identity/sign-in/web/reference#googleauthgrantofflineaccessoptions)
+
+### auth2
+
+The `GoogleAuth` instance that was initialized when the hook was initially run.
+You shouldn't need to use this directly, but it is provided if necessary.
+
+> GoogleAuth is a singleton class that provides methods to allow the user to
+> sign in with a Google account, get the user's current sign-in status, get
+> specific data from the user's Google profile, request additional scopes, and
+> sign out from the current account.
+
+For more information, refer to
+[Google's docs](https://developers.google.com/identity/sign-in/web/reference#authentication)
+
 ## API
 
 Specify any of the options defined below:
 
-| Name              | Type    | Default              | Description                                                                                                                                                                                                                             |     |
-| ----------------- | ------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| clientId          | String  | ---                  | **Required**. The clientID for your application from Google's developer console.                                                                                                                                                        |     |
-| persist           | Boolean | true                 | Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.                                                                                                                                                  |     |
-| hostedDomain      | String  | ---                  | The G Suite domain to which users must belong to sign in. If blank, all google accounts can login.                                                                                                                                      |     |
-| autoSignIn        | String  | 'none'               | Enum allowing either `none`, `prompt` or `auto`. If set to `prompt`, will attempt to automatically sign the user in with the full ux flow (popup, redirect). If set to `auto`, will attempt to automatically login without any ux flow. |     |
-| redirectUri       | String  | ''                   | If `uxMode` is set to `redirect`, this is the address a user will be sent to after resolving the Google auth flow.                                                                                                                      |     |
-| scope             | String  | 'profile email'      | The scopes to request, as a space-delimited string. Optional if `fetch_basic_profile` is set to true.                                                                                                                                   |     |
-| cookiePolicy      | String  | 'single_host_origin' | The domains for which to create sign-in cookies. Either a URI, `single_host_origin`, or none                                                                                                                                            |     |
-| fetchBasicProfile | Boolean | true                 | Allows fetching of users' basic profile information when they sign in. Adds 'profile', 'email' and 'openid' to the requested scopes.                                                                                                    |     |
-| uxMode            | String  | 'popup'              | Enum of either `popup` or `redirect`. If `redirect`, will redirect the user to the uri specified in `redirectUri` after login flow.                                                                                                     |     |
+| Name              | Type    | Default              | Description                                                                                                     |
+| ----------------- | ------- | -------------------- | --------------------------------------------------------------------------------------------------------------- |
+| clientId          | String  | ---                  | **Required**. The clientID for your application from Google's developer console.                                |
+| persist           | Boolean | true                 | Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.                          |
+| uxMode            | String  | 'popup'              | Enum of either `popup` or `redirect`. If set to `redirect`, `redirectUri` must also be set.                     |
+| redirectUri       | String  | ''                   | If `uxMode` is set to `redirect`, this is the address a user will be sent to after the login flow.              |
+| scope             | String  | 'profile email'      | The scopes to request, as a space-delimited string. **Optional** if `fetch_basic_profile` is set to `true`.     |
+| fetchBasicProfile | Boolean | true                 | Fetches common user profile information on login. Adds `profile`, `email` and `openid` to the requested scopes. |
+| cookiePolicy      | String  | 'single_host_origin' | The domains for which to create sign-in cookies. Either a URI, `single_host_origin`, or `none`.                 |
+| hostedDomain      | String  | ---                  | The G Suite domain to which users must belong to sign in. If blank, all google accounts can login.              |
 
 ## Persisting Users
 
 By default, `useGoogleLogin` will handle persisting `googleUser` on page refresh
-by using the stored values in `sessionStorage` that Google's `gapi` client
-automatically stores.
+by using values in `sessionStorage` that Google's `gapi` client automatically
+stores.
 
 If you wish to opt-out of this behavior, set `persist` to `false` when calling
 `useGoogleLogin()`.
@@ -199,20 +224,20 @@ If you wish to opt-out of this behavior, set `persist` to `false` when calling
 ### Dealing with a flash of an unauthenticated view:
 
 Due to the nature of client-side-only authentication, it's not possible to
-completely prevent a brief moment of unauthenticated state on page refresh. To
-help with this, `useGoogleLogin` returns `isInitialized`.
+completely prevent a brief moment of unauthenticated state on hard page refresh
+for pages that are server-side rendered (SSR'd). To help with this,
+`useGoogleLogin` returns `isInitialized`.
 
 `isInitialized` will be `false` until Google's API has been loaded and any
 logged in user has been persisted to `googleUser` from `sessionStorage`.
 
-If you prevent rendering of a component reliant on authenticated state until
+If you prevent the rendering of a component reliant on authenticated state until
 `isInitialized` is `true`, you can momentarily hide any of these components
 (preventing a janky rapid state change) until you know they are logged in or
 not.
 
 ```jsx
 // In this case, a user has already logged in but prior, but has refreshed the page:
-
 const Page = () => {
   const { isSignedIn, isInitalized } = useGoogleLogin()
 
@@ -235,6 +260,10 @@ const Page = () => {
 
 In the above example, the `<button>` will only display "Sign Out" on page load
 instead of rapidly swapping between "Sign In" and "Sign Out".
+
+> Please keep in mind that this workaround will result in these components
+> **not** being rendered in SSR'd content. If SSR'd authenticated content is
+> critical to your app, this library may not fit your needs.
 
 ## License
 

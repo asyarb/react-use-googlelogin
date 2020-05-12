@@ -53,8 +53,7 @@ export interface HookConfig {
   cookiePolicy?: `single_host_origin` | `none` | string
 
   /**
-   * The scopes to request, as a space-delimited string. This option is optional if `fetchBasicProfile` is
-   * `false`.
+   * The scopes to request, as a space-delimited string. Optional if `fetchBasicProfile` is `true`.
    *
    * @default 'profile email openid'
    */
@@ -62,7 +61,7 @@ export interface HookConfig {
 
   /**
    * Allows fetching of users' basic profile information when they sign in. If using this option,
-   * must set the `scope` option to include `profile email openid`.
+   * the `scope` option must include `profile email openid`.
    *
    * @default `true`
    */
@@ -91,21 +90,14 @@ export interface HookConfig {
   redirectUri?: string
 
   /**
-   * Enum allowing either `none`, `prompt` or `auto`. If set to `prompt`, will attempt to automatically
-   * sign the user in with the full ux flow (popup, redirect). If set to `auto`, will attempt
-   * to automatically login without any ux flow.
-   */
-  autoSignIn?: 'none' | 'prompt' | 'auto'
-
-  /**
    * Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.
    */
   persist?: boolean
 }
 
 export interface HookState {
-  googleUser: GoogleUser | null
-  auth2: gapi.auth2.GoogleAuth | null
+  googleUser?: GoogleUser
+  auth2?: gapi.auth2.GoogleAuth
   isSignedIn: boolean
   isInitialized: boolean
 }
