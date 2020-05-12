@@ -105,7 +105,7 @@ export const useGoogleLogin = ({
    *
    * @param options - Configuration options for granting offline access.
    *
-   * @returns The authorization code if permissino was granted, `undefined` otherwise.
+   * @returns The authorization `code` if permission was granted, `undefined` otherwise.
    */
   const grantOfflineAccess = async (
     options?: gapi.auth2.OfflineAccessOptions
