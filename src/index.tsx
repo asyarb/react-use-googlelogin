@@ -10,15 +10,21 @@ import { GoogleUser, HookConfig, HookState } from './types'
  *
  * @param user - `GoogleUser` instance to get basic info on.
  */
-const getAndSetBasicProfile = (user: GoogleUser) => {
-  const basicProfile = user.getBasicProfile()
+const getAdditionalUserData = (
+  user: GoogleUser,
+  fetchBasicProfile: boolean
+) => {
   const authResponse = user.getAuthResponse()
 
-  user.googleId = basicProfile.getId()
   user.tokenObj = authResponse
   user.tokenId = authResponse.id_token
   user.accessToken = authResponse.access_token
 
+  if (!fetchBasicProfile) return
+
+  const basicProfile = user.getBasicProfile()
+
+  user.googleId = basicProfile.getId()
   user.profileObj = {
     googleId: basicProfile.getId(),
     imageUrl: basicProfile.getImageUrl(),
@@ -71,7 +77,7 @@ export const useGoogleLogin = ({
 
     try {
       const googleUser = await auth2.signIn(options)
-      if (fetchBasicProfile) getAndSetBasicProfile(googleUser)
+      getAdditionalUserData(googleUser, fetchBasicProfile)
 
       return googleUser
     } catch (err) {
@@ -135,8 +141,8 @@ export const useGoogleLogin = ({
     const isSignedIn = googleUser.isSignedIn()
     const auth2 = window.gapi.auth2.getAuthInstance()
 
-    if (fetchBasicProfile && isSignedIn && !googleUser.profileObj)
-      getAndSetBasicProfile(googleUser)
+    if (isSignedIn && !googleUser.tokenId)
+      getAdditionalUserData(googleUser, fetchBasicProfile)
 
     setState({
       auth2,
@@ -176,7 +182,7 @@ export const useGoogleLogin = ({
           return
         }
 
-        if (fetchBasicProfile && isSignedIn) getAndSetBasicProfile(googleUser)
+        if (isSignedIn) getAdditionalUserData(googleUser, fetchBasicProfile)
         setState({ googleUser, auth2, isSignedIn, isInitialized: true })
       })
     }
