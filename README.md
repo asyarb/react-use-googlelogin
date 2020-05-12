@@ -169,7 +169,20 @@ section for more information about using `isInitialized`.
 
 ### grantOfflineAccess()
 
-TODO
+Requests the user to access the specified `scopes` while offline. This is useful
+if you wish to perform API requests on behalf of the user from a backend/secure
+environment you control.
+
+If the user grants access, this function will return the authorization `code`
+that can be exchanged for a `refreshToken` and `accessTokens` on your backend.
+If a user is not signed in and grants offline access, this function will also
+sign the user in.
+
+For more information on online access and integrating it with your backend refer
+to:
+
+- [Google's server docs](https://developers.google.com/identity/protocols/oauth2/web-server#exchange-authorization-code)
+- [Google's client docs](https://developers.google.com/identity/sign-in/web/reference#googleauthgrantofflineaccessoptions)
 
 ### auth2
 

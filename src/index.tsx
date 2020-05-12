@@ -99,7 +99,7 @@ export const useGoogleLogin = ({
 
   /**
    * Attempts to get permission from the user to access the specified `scopes` offline.
-   * If the user grant's access, this function will return the `authorizationCode` that
+   * If the user grants access, this function will return the `authorizationCode` that
    * can be exchanged for a `refreshToken` on your own server or backend service.
    * @public
    *
