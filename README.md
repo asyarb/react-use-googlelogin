@@ -19,13 +19,6 @@ npm install --save react-use-googlelogin
 yarn add react-use-googlelogin
 ```
 
-## Examples
-
-These examples are in progress, but will be available soon:
-
-- Minimal
-- Minimal w/ context
-
 ## Usage
 
 ⚠ **Important**: You will need to have an active application and `clientID` from
@@ -63,6 +56,15 @@ const GoogleLoginButton = () => {
   return <button onClick={signIn}>Sign in with Google</button>
 }
 ```
+
+### Examples
+
+These examples are in progress, but will be available soon:
+
+- Minimal
+- Minimal w/ context
+
+## Hook Return Values
 
 **As a React Hook**, you can destructure these values:
 
