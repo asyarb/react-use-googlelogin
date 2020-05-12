@@ -53,8 +53,7 @@ export interface HookConfig {
   cookiePolicy?: `single_host_origin` | `none` | string
 
   /**
-   * The scopes to request, as a space-delimited string. This option is optional if `fetchBasicProfile` is
-   * `false`.
+   * The scopes to request, as a space-delimited string. Optional if `fetchBasicProfile` is `true`.
    *
    * @default 'profile email openid'
    */
@@ -62,7 +61,7 @@ export interface HookConfig {
 
   /**
    * Allows fetching of users' basic profile information when they sign in. If using this option,
-   * must set the `scope` option to include `profile email openid`.
+   * the `scope` option must include `profile email openid`.
    *
    * @default `true`
    */
