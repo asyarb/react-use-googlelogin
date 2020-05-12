@@ -91,21 +91,14 @@ export interface HookConfig {
   redirectUri?: string
 
   /**
-   * Enum allowing either `none`, `prompt` or `auto`. If set to `prompt`, will attempt to automatically
-   * sign the user in with the full ux flow (popup, redirect). If set to `auto`, will attempt
-   * to automatically login without any ux flow.
-   */
-  autoSignIn?: 'none' | 'prompt' | 'auto'
-
-  /**
    * Toggle whether `googleUser` should be persisted from `sessionStorage` on page refresh.
    */
   persist?: boolean
 }
 
 export interface HookState {
-  googleUser: GoogleUser | null
-  auth2: gapi.auth2.GoogleAuth | null
+  googleUser?: GoogleUser
+  auth2?: gapi.auth2.GoogleAuth
   isSignedIn: boolean
   isInitialized: boolean
 }
