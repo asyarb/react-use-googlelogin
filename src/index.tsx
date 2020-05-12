@@ -117,7 +117,8 @@ export const useGoogleLogin = ({
 
       return code
     } catch (err) {
-      if (__DEV__) console.error('Received error when signing in: ' + err)
+      if (__DEV__)
+        console.error('Received error when granting offline access: ' + err)
       return
     }
   }
