@@ -63,6 +63,7 @@ These examples are in progress, but will be available soon:
 
 - Minimal
 - Minimal w/ context
+- Minimal w/ context (TypeScript)
 
 ## Hook Return Values
 

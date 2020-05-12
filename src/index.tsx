@@ -108,7 +108,7 @@ export const useGoogleLogin = ({
    * @returns The authorization code if permissino was granted, `undefined` otherwise.
    */
   const grantOfflineAccess = async (
-    options: gapi.auth2.OfflineAccessOptions
+    options?: gapi.auth2.OfflineAccessOptions
   ): Promise<string | undefined> => {
     const auth2 = window.gapi.auth2.getAuthInstance()
 
@@ -135,9 +135,11 @@ export const useGoogleLogin = ({
     const isSignedIn = googleUser.isSignedIn()
     const auth2 = window.gapi.auth2.getAuthInstance()
 
+    if (fetchBasicProfile && isSignedIn) getAndSetBasicProfile(googleUser)
+
     setState({
       auth2,
-      googleUser: isSignedIn ? googleUser : undefined,
+      googleUser,
       isSignedIn,
       isInitialized: true,
     })
