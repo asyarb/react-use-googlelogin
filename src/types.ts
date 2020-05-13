@@ -101,3 +101,13 @@ export interface HookState {
   isSignedIn: boolean
   isInitialized: boolean
 }
+
+export interface HookReturnValue extends HookState {
+  signIn: (
+    options?: gapi.auth2.SigninOptions
+  ) => Promise<GoogleUser | undefined>
+  signOut: () => Promise<boolean>
+  grantOfflineAccess: (
+    options?: gapi.auth2.OfflineAccessOptions
+  ) => Promise<string | undefined>
+}

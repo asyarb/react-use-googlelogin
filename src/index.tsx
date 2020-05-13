@@ -2,7 +2,9 @@ import { useState } from 'react'
 
 import { useExternalScript } from './useExternalScript'
 import { DOM_ID, GOOGLE_API_URL } from './constants'
-import { GoogleUser, HookConfig, HookState } from './types'
+import { GoogleUser, HookConfig, HookState, HookReturnValue } from './types'
+
+export type GoogleLoginHookReturnValue = HookReturnValue
 
 /**
  * Retrieves basic profile information for a given user.
@@ -52,7 +54,7 @@ export const useGoogleLogin = ({
   fetchBasicProfile = true,
   uxMode = 'popup',
   persist = true,
-}: HookConfig) => {
+}: HookConfig): HookReturnValue => {
   if (!clientId) throw new Error('clientId is required.')
 
   const [state, setState] = useState<HookState>({
