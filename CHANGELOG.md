@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.1](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.0...v0.12.1) (2020-05-13)
+
+
+### Features
+
+* examples and hook return value ([a35882e](https://github.com/asyarb/react-use-googlelogin/commit/a35882e7cae5134b84bae6ff401c7191a50468b5))
+* minimal example ([af6229a](https://github.com/asyarb/react-use-googlelogin/commit/af6229a34c7498935b4b1953bff46d046f28b68e))
+
 ## [0.12.0](https://github.com/asyarb/react-use-googlelogin/compare/v0.11.2...v0.12.0) (2020-05-12)
 
 
