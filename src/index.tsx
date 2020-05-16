@@ -21,6 +21,7 @@ const getAdditionalUserData = (
   user.tokenObj = authResponse
   user.tokenId = authResponse.id_token
   user.accessToken = authResponse.access_token
+  user.expiresAt = authResponse.expires_at
 
   if (!fetchBasicProfile) return
 
