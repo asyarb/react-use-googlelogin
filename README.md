@@ -81,9 +81,9 @@ const GoogleLoginButton = () => {
 
 These examples are in progress, but will be available soon:
 
-- [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/examples/examples/minimal)
-- [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/examples/examples/minimal-context)
-- [Refresh Tokens w/ serverless functions](https://github.com/asyarb/react-use-googlelogin/tree/examples/examples/serverless-refresh)
+- [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal)
+- [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal-context)
+- [Refresh Tokens w/ serverless functions](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/serverless-refresh)
 
 ## Hook Return Values
 
