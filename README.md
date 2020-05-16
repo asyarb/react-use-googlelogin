@@ -79,7 +79,7 @@ const GoogleLoginButton = () => {
 
 ### Examples
 
-These examples are in progress, but will be available soon:
+See below for example integrations.
 
 - [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal)
 - [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal-context)
