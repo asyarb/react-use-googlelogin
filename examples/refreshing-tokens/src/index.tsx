@@ -14,7 +14,6 @@ const App = () => {
   } = useGoogleAuth()
 
   const handleRequest = async () => {
-    console.log(googleUser.expiresAt, googleUser.accessToken)
     await fetchWithRefresh('/')
   }
 
