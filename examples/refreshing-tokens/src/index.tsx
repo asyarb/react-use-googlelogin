@@ -6,7 +6,7 @@ import './index.css'
 
 const App = () => {
   const {
-    signInWithTokens,
+    signIn,
     signOut,
     googleUser,
     isSignedIn,
@@ -14,14 +14,7 @@ const App = () => {
   } = useGoogleAuth()
 
   const handleRequest = async () => {
-    // const res = await fetchWithRefresh('/')
-    console.log({
-      accessToken: googleUser?.accessToken,
-      expiresAt: googleUser?.expiresAt,
-    })
-
-    const x = await googleUser?.reloadAuthResponse()
-    console.log(x)
+    await fetchWithRefresh('/')
   }
 
   return (
@@ -38,7 +31,7 @@ const App = () => {
           justifyContent: 'start',
         }}
       >
-        <button onClick={signInWithTokens}>Sign in</button>
+        <button onClick={() => signIn}>Sign in</button>
         <button onClick={signOut}>Sign Out</button>
         <button onClick={handleRequest}>Auto token fetch</button>
       </div>

@@ -82,6 +82,7 @@ See below for example integrations.
 
 - [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal)
 - [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal-context)
+- [Refreshing Tokens](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/refreshing-tokens)
 
 ## Hook Return Values
 
