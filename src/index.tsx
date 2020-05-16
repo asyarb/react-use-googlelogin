@@ -2,7 +2,13 @@ import { useState } from 'react'
 
 import { useExternalScript } from './useExternalScript'
 import { DOM_ID, GOOGLE_API_URL } from './constants'
-import { GoogleUser, HookConfig, HookState, HookReturnValue } from './types'
+import {
+  GoogleUser,
+  HookConfig,
+  HookState,
+  HookReturnValue,
+  TokenObj,
+} from './types'
 
 export type GoogleLoginHookReturnValue = HookReturnValue
 
@@ -133,6 +139,44 @@ export const useGoogleLogin = ({
   }
 
   /**
+   * Refreshes the current logged in user's `accessToken` and updates
+   * `googleUser` accordingly.
+   *
+   * @returns An object containing the new `accessToken` and its corresponding
+   * `expiresAt`.
+   */
+  const refreshUser = async (): Promise<TokenObj | undefined> => {
+    try {
+      const tokenObj = await state.googleUser?.reloadAuthResponse()
+      if (!tokenObj) {
+        if (__DEV__)
+          console.error('Something went wrong refreshing the current user.')
+
+        return
+      }
+
+      setState(prevState => ({
+        ...prevState,
+        googleUser: {
+          ...(prevState.googleUser as GoogleUser),
+          tokenObj,
+          accessToken: tokenObj.access_token,
+          expiresAt: tokenObj.expires_at,
+        },
+      }))
+
+      return {
+        accessToken: tokenObj.access_token,
+        expiresAt: tokenObj.expires_at,
+      }
+    } catch (err) {
+      if (__DEV__)
+        console.error('Received error when refreshing tokens: ' + err)
+      return
+    }
+  }
+
+  /**
    * Callback function passed to Google's auth listener. Updates the hook's
    * state based on the type of auth change event.
    * @private
@@ -198,5 +242,6 @@ export const useGoogleLogin = ({
     signIn,
     signOut,
     grantOfflineAccess,
+    refreshUser,
   }
 }

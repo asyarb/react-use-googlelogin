@@ -25,6 +25,8 @@ yarn start:lambda
 npm start:lambda
 ```
 
+Be sure to replace the placeholder `clientId` with your own.
+
 ## High-level overview
 
 1. Authenticate a user using `grantOfflineAccess` and send the authorization

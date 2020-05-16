@@ -101,6 +101,12 @@ export interface HookConfig {
   persist?: boolean
 }
 
+export interface TokenObj {
+  accessToken: string
+  /** Epoch time in milliseconds the `accessToken` will expire. */
+  expiresAt: number
+}
+
 export interface HookState {
   googleUser?: GoogleUser
   auth2?: gapi.auth2.GoogleAuth
@@ -116,4 +122,5 @@ export interface HookReturnValue extends HookState {
   grantOfflineAccess: (
     options?: gapi.auth2.OfflineAccessOptions
   ) => Promise<string | undefined>
+  refreshUser: () => Promise<TokenObj | undefined>
 }

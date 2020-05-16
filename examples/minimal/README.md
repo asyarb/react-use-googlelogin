@@ -20,3 +20,5 @@ yarn start
 # Or use npm
 npm start
 ```
+
+Be sure to replace the placeholder `clientId` with your own.

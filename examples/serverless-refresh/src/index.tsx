@@ -14,7 +14,14 @@ const App = () => {
   } = useGoogleAuth()
 
   const handleRequest = async () => {
-    const res = await fetchWithRefresh('/')
+    // const res = await fetchWithRefresh('/')
+    console.log({
+      accessToken: googleUser?.accessToken,
+      expiresAt: googleUser?.expiresAt,
+    })
+
+    const x = await googleUser?.reloadAuthResponse()
+    console.log(x)
   }
 
   return (
