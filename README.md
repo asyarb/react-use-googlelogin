@@ -18,15 +18,14 @@ library for accessing Google login functionality in your React app.
   - [signIn()](#signin)
   - [signOut()](#signout)
   - [isSignedIn](#issignedin)
-  - [isInitialized](#isinitialized)
   - [grantOfflineAccess()](#grantofflineaccess)
-    - [Google's Official docs on refreshing tokens](#googles-official-docs-on-refreshing-tokens)
+    - [Google's Official docs on refreshing tokens on a backend](#googles-official-docs-on-refreshing-tokens-on-a-backend)
+  - [refreshUser()](#refreshuser)
+  - [isInitialized](#isinitialized)
   - [auth2](#auth2)
 - [API](#api)
 - [Persisting Users](#persisting-users)
   - [Dealing with a flash of an unauthenticated view:](#dealing-with-a-flash-of-an-unauthenticated-view)
-- [Refreshing Tokens](#refreshing-tokens)
-  - [High-level refresh flow](#high-level-refresh-flow)
 - [License](#license)
 
 ## Install
@@ -83,7 +82,6 @@ See below for example integrations.
 
 - [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal)
 - [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal-context)
-- [Refresh Tokens w/ serverless functions](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/serverless-refresh)
 
 ## Hook Return Values
 
@@ -181,28 +179,39 @@ const Page = () => {
 }
 ```
 
+### grantOfflineAccess()
+
+A function that will sign in a user and prompt them for long-term access. Will
+use the sign-in flow specified by the `uxMode` parameter.
+
+Signing in a user with this function allows usage of `refreshUser` to get new
+`accessToken`s. This is useful if the default 1 hour duration is too limiting
+for your app.
+
+This function returns an authorization `code` that can be exchanged for a
+`refreshToken` and `accessTokens` on your backend if needed.
+
+#### Google's Official docs on refreshing tokens on a backend
+
+- [Google's server docs](https://developers.google.com/identity/protocols/oauth2/web-server#exchange-authorization-code)
+- [Google's client docs](https://developers.google.com/identity/sign-in/web/reference#googleauthgrantofflineaccessoptions)
+
+### refreshUser()
+
+A function that will refresh the `accessToken` for the currently logged in
+`googleUser`. To use this function, a user must have logged in via
+`grantOfflineAccess`.
+
+Under the hood, this calls `GoogleUser.reloadAuthResponse()` and handles the
+react state updates. See
+[Google's docs](https://developers.google.com/identity/sign-in/web/reference#googleuserreloadauthresponse)
+for more info.
+
 ### isInitialized
 
 A boolean that is `true` once the `window.gapi` object is available, and `false`
 otherwise. Please see the [persisiting users](#persisting-users) section for
 more information about using `isInitialized`.
-
-### grantOfflineAccess()
-
-A function that will sign in a user and prompt them for long-term access to the
-specified `scope`. Will use the sign-in flow specified by the `uxMode`
-parameter.
-
-If the user grants access, this function will return an authorization `code`
-that can be exchanged for a `refreshToken` and `accessTokens` on your backend.
-
-Please see the [Refreshing Tokens](#refreshing-tokens) section for more
-information and examples on using this library and refreshing `accessTokens`.
-
-#### Google's Official docs on refreshing tokens
-
-- [Google's server docs](https://developers.google.com/identity/protocols/oauth2/web-server#exchange-authorization-code)
-- [Google's client docs](https://developers.google.com/identity/sign-in/web/reference#googleauthgrantofflineaccessoptions)
 
 ### auth2
 
@@ -284,35 +293,6 @@ instead of rapidly swapping between "Sign In" and "Sign Out".
 > Please keep in mind that this workaround will result in these components
 > **not** being rendered in SSR'd content. If SSR'd authenticated content is
 > critical to your app, this library may not fit your needs.
-
-## Refreshing Tokens
-
-Unfortunately, any user that signs in via Google's client-side libraries will
-only be issued an `accessToken` that expires in 1 hour. If you need API access
-beyond this threshold, you'll need to run some server-side code if you want to
-avoid asking the user to sign in again.
-
-Out of the box functionality for dealing with `accessTokens` and `refreshTokens`
-is out of the scope of this library, but there is a fully functioning example in
-the [Examples](#examples) section that can help guide your own integration.
-
-### High-level refresh flow
-
-If you want a high-level overview of the steps needed to integrate token
-refreshing:
-
-1. Authenticate a user using `grantOfflineAccess` and send the authorization
-   `code` to your server.
-2. On your server, make a request to Google's token API while sending along
-   `code` to exchange it for a `refreshToken`.
-3. Set the `refreshToken` as a `HttpOnly` cookie in the response back to your
-   client.
-4. Whenever the `expiresAt` on `googleUser` has passed, make a request back to
-   your server for a new `accessToken`.
-5. Since we set our `refreshToken` as a cookie in `3`, we can access it on our
-   server and call Google's token API for a new `accessToken`.
-6. Return the new `accessToken` to the client for use in future API calls.
-7. Repeat steps `4` - `6` as necessary.
 
 ## License
 
