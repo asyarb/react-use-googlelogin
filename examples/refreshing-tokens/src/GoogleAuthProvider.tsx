@@ -1,15 +1,16 @@
 import React, { useContext } from 'react'
-import {
-  useGoogleLogin,
-  GoogleLoginHookReturnValue,
-} from 'react-use-googlelogin'
+import { useGoogleLogin, GoogleLoginHookReturnValue } from '../../../dist'
 
-interface ContextValue extends Omit<GoogleLoginHookReturnValue, 'signIn'> {
+interface ContextValue
+  extends Omit<
+    GoogleLoginHookReturnValue,
+    'signIn' | 'refreshUser' | 'grantOfflineAccess'
+  > {
   fetchWithRefresh: (
     inupt: RequestInfo,
     init?: RequestInit
   ) => Promise<Response>
-  signInWithTokens: () => Promise<boolean>
+  signIn: GoogleLoginHookReturnValue['grantOfflineAccess']
 }
 
 /**
@@ -41,6 +42,7 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
     grantOfflineAccess,
     signOut,
     isSignedIn,
+    refreshUser,
   } = useGoogleLogin({
     clientId: 'your-client-id',
   })
@@ -55,15 +57,13 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
     input,
     init
   ) => {
-    if (!tokenObj.expiresAt || !tokenObj.accessToken) throw new Error()
-
-    let accessToken = tokenObj.accessToken
+    let accessToken = googleUser.accessToken
     // The token is within 5 minutes of expiring
-    const shouldRefreshToken = tokenObj.expiresAt - 300 * 1000 - Date.now() <= 0
+    const shouldRefreshToken =
+      googleUser.expiresAt - 300 * 1000 - Date.now() <= 0
 
     if (shouldRefreshToken) {
-      accessToken =
-        (await refreshAccessToken()).accessToken ?? tokenObj.accessToken
+      accessToken = (await refreshUser()).accessToken ?? accessToken
     }
 
     return fetch(input, {
@@ -78,11 +78,11 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
   return (
     <AuthProvider
       value={{
+        signIn: grantOfflineAccess,
         isSignedIn,
         isInitialized,
         googleUser,
         signOut,
-        grantOfflineAccess,
         fetchWithRefresh,
       }}
     >

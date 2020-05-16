@@ -202,6 +202,9 @@ A function that will refresh the `accessToken` for the currently logged in
 `googleUser`. To use this function, a user must have logged in via
 `grantOfflineAccess`.
 
+On success, the function will return an object containing the new `accessToken`
+and corresponding `expiresAt` epoch time.
+
 Under the hood, this calls `GoogleUser.reloadAuthResponse()` and handles the
 react state updates. See
 [Google's docs](https://developers.google.com/identity/sign-in/web/reference#googleuserreloadauthresponse)
