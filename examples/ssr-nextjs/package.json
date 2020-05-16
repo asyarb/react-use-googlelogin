@@ -1,0 +1,19 @@
+{
+  "license": "MIT",
+  "version": "1.0.0",
+  "main": "index.jsx",
+  "scripts": {
+    "start": "next dev"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "typescript": "^3.9.2"
+  },
+  "dependencies": {
+    "next": "^9.4.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-use-googlelogin": "^0.12.3"
+  }
+}
