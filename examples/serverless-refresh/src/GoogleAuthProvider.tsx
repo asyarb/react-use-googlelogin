@@ -56,8 +56,8 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
   const [tokenObj, setTokenObj] = useState<TokenObj>({})
 
   /**
-   * Use this function to sign in to Google while also
-   * setting up our `refreshToken` as a HttpOnly cookie
+   * Use this function to sign into Google while also
+   * setting up our `refreshToken` as a `HttpOnly` cookie
    * from our serverless endpoint.
    */
   const signInWithTokens = async () => {
