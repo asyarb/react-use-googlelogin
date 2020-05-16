@@ -142,6 +142,9 @@ export const useGoogleLogin = ({
    * Refreshes the current logged in user's `accessToken` and updates
    * `googleUser` accordingly.
    *
+   * @remarks
+   * To use this function, the user must have signed in via `grantOfflineAccess`.
+   *
    * @returns An object containing the new `accessToken` and its corresponding
    * `expiresAt`.
    */
