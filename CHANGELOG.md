@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.2](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.1...v0.12.2) (2020-05-16)
+
+
+### Features
+
+* add expiresAt to root GoogleUser ([08903ea](https://github.com/asyarb/react-use-googlelogin/commit/08903ea976dec45aa10b5b77814c1657ce251e48))
+
 ### [0.12.1](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.0...v0.12.1) (2020-05-13)
 
 
