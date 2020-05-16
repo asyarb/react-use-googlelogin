@@ -1,8 +1,8 @@
 # Refresh Tokens With Serverless Functions
 
-Example of using `react-use-googlelogin` alongside serverless functions on
+Example of using `react-use-googlelogin` with serverless functions on
 [Vercel](https://vercel.com/). Refresh tokens and server-side code is necessary
-to have auth access that excees 1 hour.
+to have auth access that exceeds 1 hour.
 
 In addition to your `clientId`, you'll also need your `clientSecret` to exchange
 `refreshTokens` and authorization `code`'s for `accessTokens`.

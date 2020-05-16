@@ -21,6 +21,6 @@
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-use-googlelogin": "^0.12.1"
+    "react-use-googlelogin": "^0.12.2"
   }
 }

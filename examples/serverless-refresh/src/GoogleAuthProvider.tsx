@@ -147,7 +147,7 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
 
     setTokenObj({
       accessToken: googleUser?.accessToken,
-      expiresAt: googleUser?.tokenObj?.expires_at,
+      expiresAt: googleUser?.expiresAt,
     })
   }, [isInitialized, googleUser])
 
