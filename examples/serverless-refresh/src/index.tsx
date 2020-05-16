@@ -33,7 +33,7 @@ const App = () => {
       >
         <button onClick={signInWithTokens}>Sign in</button>
         <button onClick={signOut}>Sign Out</button>
-        <button onClick={handleRequest}>Make request to Google's API.</button>
+        <button onClick={handleRequest}>Auto token fetch</button>
       </div>
 
       {isSignedIn && (
