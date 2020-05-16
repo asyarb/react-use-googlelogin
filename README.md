@@ -83,6 +83,7 @@ See below for example integrations.
 - [Minimal](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal)
 - [Minimal w/ context](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/minimal-context)
 - [Refreshing Tokens](https://github.com/asyarb/react-use-googlelogin/tree/master/examples/refreshing-tokens)
+- [SSR content with NextJS] - Coming Soon
 
 ## Hook Return Values
 
@@ -295,8 +296,8 @@ In the above example, the `<button>` will only display "Sign Out" on page load
 instead of rapidly swapping between "Sign In" and "Sign Out".
 
 > Please keep in mind that this workaround will result in these components
-> **not** being rendered in SSR'd content. If SSR'd authenticated content is
-> critical to your app, this library may not fit your needs.
+> **not** being rendered in SSR'd content. In the future, this library plans to
+> provide an example integration for SSR.
 
 ## License
 
