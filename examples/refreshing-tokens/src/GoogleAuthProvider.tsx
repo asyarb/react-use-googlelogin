@@ -1,5 +1,8 @@
 import React, { useContext } from 'react'
-import { useGoogleLogin, GoogleLoginHookReturnValue } from '../../../dist'
+import {
+  useGoogleLogin,
+  GoogleLoginHookReturnValue,
+} from 'react-use-googlelogin'
 
 interface ContextValue
   extends Omit<
@@ -60,10 +63,11 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
     let accessToken = googleUser.accessToken
     // The token is within 5 minutes of expiring
     const shouldRefreshToken =
-      googleUser.expiresAt - 300 * 1000 - Date.now() <= 0
+      googleUser.expiresAt - 3600 * 1000 - Date.now() <= 0
 
     if (shouldRefreshToken) {
-      accessToken = (await refreshUser()).accessToken ?? accessToken
+      const tokenObj = await refreshUser()
+      accessToken = tokenObj?.accessToken ?? accessToken
     }
 
     return fetch(input, {

@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "main": "index.jsx",
   "scripts": {
-    "start": "parcel src/index.html",
-    "start:lambda": "vercel dev",
-    "build": "parcel build src/index.html"
+    "start": "parcel src/index.html"
   },
   "devDependencies": {
     "@types/react": "^16.9.35",
@@ -17,6 +15,6 @@
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-use-googlelogin": "^0.12.2"
+    "react-use-googlelogin": "^0.12.3"
   }
 }

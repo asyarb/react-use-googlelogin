@@ -14,6 +14,7 @@ const App = () => {
   } = useGoogleAuth()
 
   const handleRequest = async () => {
+    console.log(googleUser.expiresAt, googleUser.accessToken)
     await fetchWithRefresh('/')
   }
 
@@ -31,7 +32,7 @@ const App = () => {
           justifyContent: 'start',
         }}
       >
-        <button onClick={() => signIn}>Sign in</button>
+        <button onClick={() => signIn()}>Sign in</button>
         <button onClick={signOut}>Sign Out</button>
         <button onClick={handleRequest}>Auto token fetch</button>
       </div>
