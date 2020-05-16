@@ -63,7 +63,7 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
     let accessToken = googleUser.accessToken
     // The token is within 5 minutes of expiring
     const shouldRefreshToken =
-      googleUser.expiresAt - 3600 * 1000 - Date.now() <= 0
+      googleUser.expiresAt - 300 * 1000 - Date.now() <= 0
 
     if (shouldRefreshToken) {
       const tokenObj = await refreshUser()
