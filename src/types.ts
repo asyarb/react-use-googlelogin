@@ -29,6 +29,12 @@ export interface GoogleUser extends gapi.auth2.GoogleUser {
   accessToken?: string
 
   /**
+   * The epoch time in seconds from Google's `AuthResponse`
+   * that the `accessToken` will expire in.
+   */
+  expiresAt?: number
+
+  /**
    * The full basic profile object from Google. Retrieved if
    * `fetchBasicProfile` is set to `true`.
    */
