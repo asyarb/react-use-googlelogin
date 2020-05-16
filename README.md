@@ -80,11 +80,13 @@ These examples are in progress, but will be available soon:
 ### googleUser
 
 An instance of `GoogleUser` representing the logged in user. Contains the user's
-verifiable ID token in the `id_token` key. Refer to
+verifiable ID token in the `tokenId` key. Refer to
 [Google's docs](https://developers.google.com/identity/sign-in/web/backend-auth)
 on verifying ID tokens on your backend.
 
-By default, contains basic user information within the `profileObj` key.
+By default, this `GoogleUser` is enhanced with additional keys for the
+`accessToken` and its corresponding `expiresAt` key. If `fetchBasicProfile` is
+`true`, the information can be found in the `profileObj` key.
 
 If no user is logged in, this will be `undefined`.
 
@@ -102,12 +104,10 @@ const Profile = () => {
 }
 ```
 
-This object is the same raw `GoogleUser` object returned by
-`gapi.auth2.getAuthInstance().currentUser.get()`. Use this object with the
-appropriate Google API functions to fetch other data from the user's profile.
-
-> A `GoogleUser` object represents one user account. GoogleUser objects are
-> typically obtained by calling `GoogleAuth.currentUser.get()`.
+This object is the same `GoogleUser` object returned by
+`gapi.auth2.getAuthInstance().currentUser.get()`. Use the `accessToken` in this
+object in conjunctino with Google's API endpoints to fetch other data for the
+user.
 
 Refer to
 [Google's docs](https://developers.google.com/identity/sign-in/web/reference#users)
@@ -134,14 +134,14 @@ const GoogleLoginButton = () => {
 }
 ```
 
-`signIn` can also take a configuration object that you can customize. For
-information on the available options, refer to:
+`signIn` can also take a configuration object. For information on the available
+options, refer to:
 [Google's docs](https://developers.google.com/identity/sign-in/web/reference#gapiauth2signinoptions)
 
 ### signOut()
 
-Signs out the current user and disconnects the current oAuth2 client. Sets the
-`googleUser` back to `undefined` and clears all persistent session storage.
+Signs out the current user and disconnects the current oAuth2 client. It also
+sets `googleUser` back to `undefined` and clears all persistent session storage.
 
 ### isSignedIn
 
@@ -169,9 +169,9 @@ section for more information about using `isInitialized`.
 
 ### grantOfflineAccess()
 
-Requests the user to access the specified `scopes` while offline. This is useful
-if you wish to perform API requests on behalf of the user from a backend/secure
-environment you control.
+Requests the user to access the specified `scopes` while "offline". This is
+useful if you wish to perform API requests on behalf of the user from a
+backend/secure environment you control.
 
 If the user grants access, this function will return the authorization `code`
 that can be exchanged for a `refreshToken` and `accessTokens` on your backend.

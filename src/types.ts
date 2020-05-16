@@ -14,7 +14,7 @@ export interface GoogleUser extends gapi.auth2.GoogleUser {
   googleId?: string
 
   /**
-   * The raw token object `AuthResponse` from Google.
+   * The raw token object from Google.
    */
   tokenObj?: gapi.auth2.AuthResponse
 
@@ -29,8 +29,8 @@ export interface GoogleUser extends gapi.auth2.GoogleUser {
   accessToken?: string
 
   /**
-   * The epoch time in seconds from Google's `AuthResponse`
-   * that the `accessToken` will expire in.
+   * The epoch time in milliseconds that the `accessToken`
+   * will expire in.
    */
   expiresAt?: number
 
