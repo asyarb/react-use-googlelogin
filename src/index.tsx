@@ -203,7 +203,7 @@ export const useGoogleLogin = ({
    *
    * It's worth noting that we could just use the callback version `setState` here,
    * and update state in `refreshUser`, but this causes causes an additional re-render
-   * by setting state twice. Batching **could* help here, but IMO batching is pretty
+   * by setting state twice. React's batching **could* help here, but it is pretty
    * un-deterministic and in my testing wouldn't kick in this particular case.
    *
    * @param googleUser GoogleUser object from the `currentUser` property.
