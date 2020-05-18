@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.12.4](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.3...v0.12.4) (2020-05-18)
+
+
+### Bug Fixes
+
+* stale closure issue when refreshing user tokens ([1be072c](https://github.com/asyarb/react-use-googlelogin/commit/1be072c05192084a5edba73b5d0529fa9a09ed94))
+
 ### [0.12.3](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.2...v0.12.3) (2020-05-16)
 
 
