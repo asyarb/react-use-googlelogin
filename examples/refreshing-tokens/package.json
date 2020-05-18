@@ -5,6 +5,11 @@
   "scripts": {
     "start": "parcel src/index.html"
   },
+  "alias": {
+    "react": "../../node_modules/react",
+    "react-dom": "../../node_modules/react-dom",
+    "react-use-googlelogin": "../../dist"
+  },
   "devDependencies": {
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 import { useExternalScript } from './useExternalScript'
 import { DOM_ID, GOOGLE_API_URL } from './constants'
@@ -70,13 +70,14 @@ export const useGoogleLogin = ({
     isSignedIn: false,
     isInitialized: false,
   })
+  const latestAccessTokenRef = useRef<string | undefined>(undefined)
+  const latestExpiresAtRef = useRef<number | undefined>(undefined)
 
   /**
    * Attempts to sign in a user with Google's oAuth2 client.
    * @public
    *
    * @param options - Configutation parameters for GoogleAuth.signIn()
-   *
    * @returns The GoogleUser instance for the signed in user.
    */
   const signIn = async (
@@ -118,8 +119,11 @@ export const useGoogleLogin = ({
    * can be exchanged for a `refreshToken` on your own server or backend service.
    * @public
    *
-   * @param options - Configuration options for granting offline access.
+   * @remarks
+   * You must sign in a user with this function in order to retain access for longer
+   * than 1 hour.
    *
+   * @param options - Configuration options for granting offline access.
    * @returns The authorization `code` if permission was granted, `undefined` otherwise.
    */
   const grantOfflineAccess = async (
@@ -139,8 +143,7 @@ export const useGoogleLogin = ({
   }
 
   /**
-   * Refreshes the current logged in user's `accessToken` and updates
-   * `googleUser` accordingly.
+   * Refreshes the current logged in user's `accessToken`.
    *
    * @remarks
    * To use this function, the user must have signed in via `grantOfflineAccess`.
@@ -150,7 +153,10 @@ export const useGoogleLogin = ({
    */
   const refreshUser = async (): Promise<TokenObj | undefined> => {
     try {
-      const tokenObj = await state.googleUser?.reloadAuthResponse()
+      const auth2 = window.gapi.auth2.getAuthInstance()
+      const googleUser = auth2.currentUser.get()
+
+      const tokenObj = await googleUser?.reloadAuthResponse()
       if (!tokenObj) {
         if (__DEV__)
           console.error('Something went wrong refreshing the current user.')
@@ -158,15 +164,8 @@ export const useGoogleLogin = ({
         return
       }
 
-      setState(prevState => ({
-        ...prevState,
-        googleUser: {
-          ...(prevState.googleUser as GoogleUser),
-          tokenObj,
-          accessToken: tokenObj.access_token,
-          expiresAt: tokenObj.expires_at,
-        },
-      }))
+      latestAccessTokenRef.current = tokenObj.access_token
+      latestExpiresAtRef.current = tokenObj.expires_at
 
       return {
         accessToken: tokenObj.access_token,
@@ -180,23 +179,60 @@ export const useGoogleLogin = ({
   }
 
   /**
-   * Callback function passed to Google's auth listener. Updates the hook's
-   * state based on the type of auth change event.
+   * Callback function passed to Google's auth listener. This is the primary
+   * mechanism to keep the hook's state/return values in sync with Google's
+   * window `gapi` objects. All stateful logic **should** be performed in
+   * here.
    * @private
    *
-   * @param googleUser - GoogleUser object for the corresponding user whose
-   * auth state has changed.
+   * @remarks
+   * Due to the way closures work, we cannot access `state` directly
+   * in this function. (yay stale closures) Normally we'd instantiate and
+   * disconnect the listener on every render so we have the correct `state`
+   * values but Google doesn't provide a way to disconnect their listener. Go figure.
+   *
+   * This function **also** may not be called with the most up-to-date `GoogleUser`.
+   * Google decided that `reloadAuthResponse` will invoke this listener, but not
+   * actually provide a `googleUser` object with the most up-to-date tokens.
+   * In most auth change scenarios this isn't an issue except when refreshing
+   * with `refreshUser`.
+   *
+   * To remedy this, we need to keep a ref that tracks the latest `accessToken`
+   * and `expiresAt` values whenever we refresh, and use those instead when they're
+   * available since they'll contain the up-to-date values.
+   *
+   * It's worth noting that we could just use the callback version `setState` here,
+   * and update state in `refreshUser`, but this causes causes an additional re-render
+   * by setting state twice. Batching **could* help here, but IMO batching is pretty
+   * un-deterministic and in my testing wouldn't kick in this particular case.
+   *
+   * @param googleUser GoogleUser object from the `currentUser` property.
    */
   const handleAuthChange = (googleUser: GoogleUser) => {
     const isSignedIn = googleUser.isSignedIn()
     const auth2 = window.gapi.auth2.getAuthInstance()
 
+    // If `tokenId` is present, we've already performed this step so skip it.
     if (isSignedIn && !googleUser.tokenId)
       getAdditionalUserData(googleUser, fetchBasicProfile)
 
     setState({
       auth2,
-      googleUser,
+      googleUser: isSignedIn
+        ? {
+            ...googleUser,
+            accessToken: latestAccessTokenRef.current ?? googleUser.accessToken,
+            expiresAt: latestExpiresAtRef.current ?? googleUser.expiresAt,
+            tokenObj: {
+              ...(googleUser.tokenObj as gapi.auth2.AuthResponse),
+              access_token:
+                latestAccessTokenRef.current ??
+                googleUser.tokenObj!.access_token,
+              expires_at:
+                latestExpiresAtRef.current ?? googleUser.tokenObj!.expires_at,
+            },
+          }
+        : undefined,
       isSignedIn,
       isInitialized: true,
     })
@@ -222,18 +258,12 @@ export const useGoogleLogin = ({
      */
     const handleLoad = () => {
       window.gapi.auth2.init(config).then(auth2 => {
-        const googleUser = auth2.currentUser.get()
-        const isSignedIn = googleUser.isSignedIn()
-
         auth2.currentUser.listen(handleAuthChange)
 
         if (!persist) {
           signOut()
           return
         }
-
-        if (isSignedIn) getAdditionalUserData(googleUser, fetchBasicProfile)
-        setState({ googleUser, auth2, isSignedIn, isInitialized: true })
       })
     }
 

@@ -47,7 +47,7 @@ export const GoogleAuthProvider: React.FC = ({ children }) => {
     isSignedIn,
     refreshUser,
   } = useGoogleLogin({
-    clientId: 'your-client-id',
+    clientId: 'your-id-here',
   })
 
   /**
