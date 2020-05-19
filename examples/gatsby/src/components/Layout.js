@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Layout: React.FC = ({ children }) => {
+export const Layout = ({ children }) => {
   return (
     <div
       style={{
