@@ -91,7 +91,8 @@ export const useGoogleLogin = ({
 
       return googleUser
     } catch (err) {
-      if (__DEV__) console.error('Received error when signing in: ' + err)
+      if (__DEV__)
+        console.error('Received error when signing in: ' + err?.details)
       return
     }
   }
@@ -137,7 +138,9 @@ export const useGoogleLogin = ({
       return code
     } catch (err) {
       if (__DEV__)
-        console.error('Received error when granting offline access: ' + err)
+        console.error(
+          'Received error when granting offline access: ' + err?.details
+        )
       return
     }
   }
@@ -173,7 +176,7 @@ export const useGoogleLogin = ({
       }
     } catch (err) {
       if (__DEV__)
-        console.error('Received error when refreshing tokens: ' + err)
+        console.error('Received error when refreshing tokens: ' + err?.details)
       return
     }
   }
@@ -258,12 +261,17 @@ export const useGoogleLogin = ({
      */
     const handleLoad = () => {
       window.gapi.auth2.init(config).then(auth2 => {
+        const googleUser = auth2.currentUser.get()
+        const isSignedIn = googleUser.isSignedIn()
         auth2.currentUser.listen(handleAuthChange)
 
         if (!persist) {
           signOut()
           return
         }
+
+        if (isSignedIn) getAdditionalUserData(googleUser, fetchBasicProfile)
+        setState({ googleUser, auth2, isSignedIn, isInitialized: true })
       })
     }
 
