@@ -1,8 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See
-[standard-version](https://github.com/conventional-changelog/standard-version)
-for commit guidelines.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.12.5](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.4...v0.12.5) (2020-05-19)
+
+
+### Bug Fixes
+
+* issue on initial render where user was not persisted ([087b219](https://github.com/asyarb/react-use-googlelogin/commit/087b2190e2accb3aeda250e712e12dda69be9d09))
 
 ### [0.12.4](https://github.com/asyarb/react-use-googlelogin/compare/v0.12.3...v0.12.4) (2020-05-18)
 
