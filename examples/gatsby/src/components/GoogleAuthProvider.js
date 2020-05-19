@@ -1,29 +1,20 @@
-import React, { useContext } from 'react'
-import {
-  useGoogleLogin,
-} from 'react-use-googlelogin'
+import React, { useContext } from "react"
+import { useGoogleLogin } from "react-use-googlelogin"
 
-/**
- * TS helper for using React.createContext() without needing
- * to check for `undefined` all the time. If you are using JS, feel free
- * to just use React.createContext() directly.
- */
 const createContext = () => {
-  const ctx = React.createContext<A | undefined>(undefined)
-
+  const ctx = React.createContext()
   const useCtx = () => {
     const contextValue = useContext(ctx)
 
     if (contextValue === undefined)
-      throw new Error('useCtx must be inside a Provider with a value')
+      throw new Error("useCtx must be inside a Provider with a value")
 
     return contextValue
   }
 
-  return [useCtx, ctx.Provider] 
+  return [useCtx, ctx.Provider]
 }
-
-const [useGoogleAuth, AuthProvider] = createContext<ContextValue>()
+const [useGoogleAuth, AuthProvider] = createContext()
 
 export const GoogleAuthProvider = ({ children }) => {
   const {
@@ -32,10 +23,9 @@ export const GoogleAuthProvider = ({ children }) => {
     grantOfflineAccess,
     signOut,
     isSignedIn,
-    refreshUser,
+    refreshUser
   } = useGoogleLogin({
-    clientId:
-      '253609759251-4m5j92ji446hv4h8e1jefbi63u40ctr1.apps.googleusercontent.com',
+    clientId: "your-client-id"
   })
 
   /**
@@ -44,10 +34,7 @@ export const GoogleAuthProvider = ({ children }) => {
    *
    * Behaves identically to `fetch` otherwise.
    */
-  const fetchWithRefresh = async (
-    input,
-    init
-  ) => {
+  const fetchWithRefresh = async (input, init) => {
     let accessToken = googleUser.accessToken
     // The token is within 5 minutes of expiring
     const shouldRefreshToken =
@@ -62,8 +49,8 @@ export const GoogleAuthProvider = ({ children }) => {
       ...init,
       headers: {
         ...init?.headers,
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     })
   }
 
@@ -75,7 +62,7 @@ export const GoogleAuthProvider = ({ children }) => {
         isInitialized,
         googleUser,
         signOut,
-        fetchWithRefresh,
+        fetchWithRefresh
       }}
     >
       {children}
