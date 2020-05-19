@@ -13,6 +13,6 @@
     "parcel": "^1.12.4"
   },
   "dependencies": {
-    "react-use-googlelogin": "^0.12.4"
+    "react-use-googlelogin": "^0.12.5"
   }
 }
