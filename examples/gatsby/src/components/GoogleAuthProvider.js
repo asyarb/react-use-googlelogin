@@ -23,9 +23,9 @@ export const GoogleAuthProvider = ({ children }) => {
     grantOfflineAccess,
     signOut,
     isSignedIn,
-    refreshUser
+    refreshUser,
   } = useGoogleLogin({
-    clientId: "your-client-id"
+    clientId: "your-client-id",
   })
 
   /**
@@ -49,8 +49,8 @@ export const GoogleAuthProvider = ({ children }) => {
       ...init,
       headers: {
         ...init?.headers,
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
   }
 
@@ -62,7 +62,7 @@ export const GoogleAuthProvider = ({ children }) => {
         isInitialized,
         googleUser,
         signOut,
-        fetchWithRefresh
+        fetchWithRefresh,
       }}
     >
       {children}

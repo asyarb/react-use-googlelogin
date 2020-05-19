@@ -1,12 +1,8 @@
 import React from "react"
-import {
-  useGoogleAuth,
-  GoogleAuthProvider,
-} from "../components/GoogleAuthProvider"
+import { useGoogleAuth } from "../components/GoogleAuthProvider"
 
 const IndexPage = () => {
   const { isSignedIn, googleUser, signIn, signOut } = useGoogleAuth()
-  console.log(isSignedIn)
 
   return (
     <div style={{ padding: "1rem" }}>

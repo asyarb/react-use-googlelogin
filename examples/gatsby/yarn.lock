@@ -8783,10 +8783,10 @@ react-refresh@^0.7.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.7.2.tgz#f30978d21eb8cac6e2f2fde056a7d04f6844dd50"
   integrity sha512-u5l7fhAJXecWUJzVxzMRU2Zvw8m4QmDNHlTrT5uo3KBlYBhmChd7syAakBoay1yIiVhx/8Fi7a6v6kQZfsw81Q==
 
-react-use-googlelogin@^0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/react-use-googlelogin/-/react-use-googlelogin-0.12.4.tgz#c852b23f6329cd0f81091b8f38b279061b98d954"
-  integrity sha512-qJXPwiTw3Mr+K7pjbG4TpankQZza39VCzpMIRFf7GgrgiD3hvOJOlHEU4WuNW2U+Sg9sp5i97IPiPNEiv4LmIw==
+react-use-googlelogin@^0.12.5:
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/react-use-googlelogin/-/react-use-googlelogin-0.12.5.tgz#a533391f4ea87621e349e4003a448db9ccb4f5e2"
+  integrity sha512-30TF9rJyhDx7mO5T+BVChaKxd4xztLMMRCkG2/gdk8o9+JMfipSvBM26OJCDnG7Ug3KxBSNR+9uKgtQ4FCI0fg==
 
 react@^16.12.0, react@^16.8.0:
   version "16.13.1"
