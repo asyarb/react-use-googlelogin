@@ -260,6 +260,7 @@ export const useGoogleLogin = ({
      * As a result, `Promise.resolve()` or `await` will cause infinite recursion.
      */
     const handleLoad = () => {
+      // TODO: Allow user to specify catch clause here.
       window.gapi.auth2.init(config).then(auth2 => {
         const googleUser = auth2.currentUser.get()
         const isSignedIn = googleUser.isSignedIn()
