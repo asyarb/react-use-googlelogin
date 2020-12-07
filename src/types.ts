@@ -105,7 +105,7 @@ export interface TokenObj {
   accessToken: string
   /** Epoch time in milliseconds the `accessToken` will expire. */
   expiresAt: number
-  idToken: string
+  tokenId: string
 }
 
 export interface HookState {
