@@ -71,6 +71,7 @@ export const useGoogleLogin = ({
     isInitialized: false,
   })
   const latestAccessTokenRef = useRef<string | undefined>(undefined)
+  const latestTokenIdRef = useRef<string | undefined>(undefined)
   const latestExpiresAtRef = useRef<number | undefined>(undefined)
 
   /**
@@ -169,10 +170,12 @@ export const useGoogleLogin = ({
 
       latestAccessTokenRef.current = tokenObj.access_token
       latestExpiresAtRef.current = tokenObj.expires_at
+      latestTokenIdRef.current = tokenObj.id_token
 
       return {
         accessToken: tokenObj.access_token,
         expiresAt: tokenObj.expires_at,
+        tokenId: tokenObj.id_token
       }
     } catch (err) {
       if (__DEV__)
@@ -226,11 +229,14 @@ export const useGoogleLogin = ({
             ...googleUser,
             accessToken: latestAccessTokenRef.current ?? googleUser.accessToken,
             expiresAt: latestExpiresAtRef.current ?? googleUser.expiresAt,
+            tokenId: latestTokenIdRef.current ?? googleUser.tokenId,
             tokenObj: {
               ...(googleUser.tokenObj as gapi.auth2.AuthResponse),
               access_token:
                 latestAccessTokenRef.current ??
                 googleUser.tokenObj!.access_token,
+              id_token: latestTokenIdRef.current ??
+                googleUser.tokenObj!.id_token,
               expires_at:
                 latestExpiresAtRef.current ?? googleUser.tokenObj!.expires_at,
             },
