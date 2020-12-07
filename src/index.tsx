@@ -173,6 +173,7 @@ export const useGoogleLogin = ({
       return {
         accessToken: tokenObj.access_token,
         expiresAt: tokenObj.expires_at,
+        idToken: tokenObj.id_token
       }
     } catch (err) {
       if (__DEV__)
