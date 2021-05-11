@@ -3061,9 +3061,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.4:
-  version "4.17.15"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-symbols@^2.2.0:
   version "2.2.0"
@@ -4156,10 +4156,10 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-react-use-googlelogin@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/react-use-googlelogin/-/react-use-googlelogin-0.12.0.tgz#eb371dae1fe257918958964632b0217d5a5004a4"
-  integrity sha512-HmF/Ql/VdZxfvouueGcoWEeXwlwOn2crGOw7MHr8nczUJErGaC+SjXmgUKsFaCRyP35eEbgzKYgU46XuvsvHNQ==
+react-use-googlelogin@^0.12.5:
+  version "0.12.5"
+  resolved "https://registry.yarnpkg.com/react-use-googlelogin/-/react-use-googlelogin-0.12.5.tgz#a533391f4ea87621e349e4003a448db9ccb4f5e2"
+  integrity sha512-30TF9rJyhDx7mO5T+BVChaKxd4xztLMMRCkG2/gdk8o9+JMfipSvBM26OJCDnG7Ug3KxBSNR+9uKgtQ4FCI0fg==
 
 readable-stream@^2.0.2, readable-stream@^2.2.2, readable-stream@^2.3.3, readable-stream@^2.3.6, readable-stream@~2.3.3, readable-stream@~2.3.6:
   version "2.3.7"
