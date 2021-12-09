@@ -11,7 +11,7 @@
     "typescript": "^3.9.2"
   },
   "dependencies": {
-    "next": "^9.4.0",
+    "next": "^11.1.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-use-googlelogin": "^0.12.5"
